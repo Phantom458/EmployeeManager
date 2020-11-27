@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "projects": {
+    "leave-manager": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/leave-manager",
+      "sourceRoot": "apps/leave-manager/src",
+      "prefix": "frontend",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/leave-manager",
+            "index": "apps/leave-manager/src/index.html",
+            "main": "apps/leave-manager/src/main.ts",
+            "polyfills": "apps/leave-manager/src/polyfills.ts",
+            "tsConfig": "apps/leave-manager/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/leave-manager/src/favicon.ico",
+              "apps/leave-manager/src/assets"
+            ],
+            "styles": ["apps/leave-manager/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/leave-manager/src/environments/environment.ts",
+                  "with": "apps/leave-manager/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "leave-manager:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "leave-manager:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "leave-manager:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/leave-manager/tsconfig.app.json",
+              "apps/leave-manager/tsconfig.spec.json",
+              "apps/leave-manager/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/leave-manager/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/leave-manager/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "leave-manager-e2e": {
+      "root": "apps/leave-manager-e2e",
+      "sourceRoot": "apps/leave-manager-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/leave-manager-e2e/cypress.json",
+            "tsConfig": "apps/leave-manager-e2e/tsconfig.e2e.json",
+            "devServerTarget": "leave-manager:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "leave-manager:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/leave-manager-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/leave-manager-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "features-leave-management": {
+      "projectType": "library",
+      "root": "libs/features/leave-management",
+      "sourceRoot": "libs/features/leave-management/src",
+      "prefix": "frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/features/leave-management/tsconfig.lib.json",
+              "libs/features/leave-management/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/features/leave-management/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/features/leave-management/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "shared-components": {
+      "projectType": "library",
+      "root": "libs/shared-components",
+      "sourceRoot": "libs/shared-components/src",
+      "prefix": "frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared-components/tsconfig.lib.json",
+              "libs/shared-components/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared-components/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "leave-manager"
+}

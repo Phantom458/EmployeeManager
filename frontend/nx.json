@@ -1,5 +1,5 @@
 {
-  "npmScope": "employee-manager",
+  "npmScope": "frontend",
   "affected": {
     "defaultBase": "master"
   },
@@ -18,27 +18,26 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "accessToken": "ZjIzNWEwZWQtMjZjNy00MWU4LWE4NjYtNjljMmQ5NmQ3YWI4fHJlYWQtd3JpdGU=",
-        "cacheableOperations": [
-          "build",
-          "test",
-          "lint",
-          "e2e"
-        ],
+        "accessToken": "YTM3MjYxMDUtYjNjZS00MjNmLWEzOTAtZTU0NDljZTRlNDY5fHJlYWQtd3JpdGU=",
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
         "showUsageWarnings": true
       }
     }
   },
   "projects": {
-    "employee-manager": {
+    "leave-manager": {
       "tags": []
     },
-    "employee-manager-e2e": {
+    "leave-manager-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "employee-manager"
-      ]
+      "implicitDependencies": ["leave-manager"]
+    },
+    "features-leave-management": {
+      "tags": []
+    },
+    "shared-components": {
+      "tags": []
     }
   }
 }
