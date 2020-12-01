@@ -1,0 +1,57 @@
+<div class="col-xs-12">
+  <frontend-alert
+    [message]="errorMessage"
+    *ngIf="errorMessage"
+    (close)="onHandleError()">
+  </frontend-alert>
+  <h3>Login or Sign Up</h3>
+  <hr>
+  <form
+    [formGroup]="userLog"
+    (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control">
+      <span
+        *ngIf="!email.valid && email.touched"
+        class="text-danger">
+              Please enter a valid email
+          </span>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control">
+      <span
+        *ngIf="!password.valid && password.touched"
+        class="text-danger">
+              Please enter a valid password
+          </span>
+    </div>
+    <div class="col-md-6">
+      <button
+        [disabled]="!userLog.valid"
+        class="btn btn-primary"
+        type="submit">
+        Log In
+      </button>
+    </div>
+
+    <div class="col-md-6">
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="onRegister()">Sign up</button>
+    </div>
+  </form>
+</div>

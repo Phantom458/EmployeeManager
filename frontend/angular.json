@@ -21,7 +21,10 @@
               "apps/leave-manager/src/favicon.ico",
               "apps/leave-manager/src/assets"
             ],
-            "styles": ["apps/leave-manager/src/styles.css"],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "apps/leave-manager/src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {

@@ -32,6 +32,16 @@
       "confirmPassword": "iamnoone",
       "status": "Inactive",
       "role": "user"
+    },
+    {
+      "firstName": "Test",
+      "lastName": "Test",
+      "email": "test@test.com",
+      "phone": "12345678",
+      "password": "123123",
+      "confirmPassword": "123123",
+      "status": "On Leave",
+      "id": 4
     }
   ],
   "Leaves": [
@@ -120,9 +130,36 @@
           "leaveLeft": 20,
           "leaveTaken": 30
         }
+      ]
+    },
+    {
+      "leave": [
+        {
+          "type": "casual",
+          "numberOfDays": 30,
+          "leaveLeft": 30,
+          "leaveTaken": 0
+        },
+        {
+          "type": "sick",
+          "numberOfDays": 60,
+          "leaveLeft": 60,
+          "leaveTaken": 0
+        },
+        {
+          "type": "maternity",
+          "numberOfDays": 180,
+          "leaveLeft": 180,
+          "leaveTaken": 0
+        },
+        {
+          "type": "toil",
+          "numberOfDays": 50,
+          "leaveLeft": 50,
+          "leaveTaken": 0
+        }
       ],
-      "leaveLeft": 33,
-      "leaveTaken": 27
+      "id": 4
     }
   ],
   "Applied": [
@@ -148,6 +185,13 @@
       "endDate": "2020-12-12",
       "daysApplied": 12,
       "interim": "Alu Dorji"
+    },
+    {
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
+      "id": 4
     }
   ]
 }

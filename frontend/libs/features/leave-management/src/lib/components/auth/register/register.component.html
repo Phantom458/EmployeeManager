@@ -1,0 +1,135 @@
+<div class="col-md-12">
+  <frontend-alert
+    [message]="formMessage"
+    *ngIf="formMessage"
+    (close)="onHandleError()">
+  </frontend-alert>
+  <form
+    [formGroup]="signUpForm"
+    *ngIf="!submitted"
+    (ngSubmit)="onRegister()">
+    <div class="form-group col-xs-6">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstName"
+        class="form-control">
+      <small
+        *ngIf="!signUpForm.get('firstName').valid && signUpForm.get('firstName').touched"
+        class="text-danger">
+        Please enter a valid name
+      </small>
+    </div>
+    <div class="form-group col-xs-6">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        class="form-control">
+      <small
+        *ngIf="!signUpForm.get('lastName').valid && signUpForm.get('lastName').touched"
+        class="text-danger">
+        Please enter a valid Name
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        id="email"
+        formControlName="email"
+        class="form-control">
+      <small
+        *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched"
+        class="text-danger">
+        Please enter a valid email
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input
+        type="text"
+        id="phone"
+        formControlName="phone"
+        class="form-control">
+      <small
+        *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched"
+        class="text-danger">
+        Please enter a valid Number
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control">
+      <div *ngIf="!signUpForm.get('password').valid && signUpForm.get('password').touched">
+        <small
+          *ngIf="signUpForm.get('password').errors?.required"
+          class="text-danger">
+          Please enter a password
+        </small>
+        <small
+          *ngIf="!signUpForm.get('password').errors?.minLength"
+          class="text-danger">
+          Password should be atleast 6 characters long
+        </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        class="form-control">
+      <small
+        *ngIf="!signUpForm.get('confirmPassword').valid || signUpForm.errors?.misMatch"
+        class="text-danger">
+        Passwords don't match
+      </small>
+    </div>
+
+    <strong *ngIf="userAuth == null">Status (Optional)</strong>
+    <div class="row" *ngIf="userAuth == null">
+      <div class="form-group radio" *ngFor="let status of statusList">
+        <label>
+          <input
+            type="radio"
+            formControlName="status" [value]="status"> {{ status }}
+        </label>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <button
+        [disabled]="!signUpForm.valid"
+        class="btn btn-primary"
+        type="submit">
+        Submit
+      </button>
+    </div>
+    <div class="col-md-6">
+      <button
+        *ngIf="userAuth == null"
+        (click)="onBack()"
+        class="btn btn-primary"
+        type="button">
+        Sign In
+      </button>
+    </div>
+    <div class="col-md-6">
+      <button
+        *ngIf="userAuth != null"
+        (click)="onCancel()"
+        class="btn btn-primary"
+        type="button">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
