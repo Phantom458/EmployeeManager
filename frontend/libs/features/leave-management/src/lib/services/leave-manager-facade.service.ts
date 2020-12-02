@@ -6,7 +6,7 @@ import { LeaveManagerApiService } from './leave-manager-api.service';
 import { LeaveManagerStateService, LeaveManagerStoreState } from './leave-manager-state.service';
 import { LeaveManagerBlService } from './leave-manager-bl.service';
 import { User } from '../models/user.model';
-import { AppliedLeave } from '../models/leave.model';
+import { AppliedLeave, Leave } from '../models/leave.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,12 +26,14 @@ export class LeaveManagerFacadeService {
               private blService: LeaveManagerBlService
   ) { }
 
+  //***Auth actions***
   checkUserExists(): Observable<number> {
     return this.userExists.asObservable();
   }
   removeUser(): void {
     this.userExists.next(this.loggedInUserId = null);
   }
+
   //*** Account actions ***
   getAllAccounts(): Observable<User[]> {
     return this.apiService.getAllAccounts().pipe(
@@ -40,29 +42,10 @@ export class LeaveManagerFacadeService {
       }, error => error)
     );
   }
-  storeUserDataToState(id: number) {
-    this.userExists.next(this.loggedInUserId = id);
-    this.apiService.getAccountById(id).pipe(
-      tap(responseData => {
-        this.stateService.updateUserState(responseData);
-      }, error => error)
-    );
-    this.apiService.getLeaveById(id).pipe(
-      tap(responseData => {
-        this.stateService.updateUserLeaveState(responseData);
-      }, error => error)
-    );
-    this.apiService.getAppliedLeaveById(id).pipe(
-      tap(responseData => {
-        this.stateService.updateUserAppliedLeaveState(responseData);
-      }, error => error)
-    );
-  }
+
   addAccount(account: Account) {
     this.apiService.addAccount(account, this.additionalLeaveData, this.additionalAppliedLeaveData);
   }
-
-  //*** Leave actions ***
 
   //*** Leave management ***
   getAllAppliedLeave(): Observable<AppliedLeave[]> {
@@ -82,5 +65,34 @@ export class LeaveManagerFacadeService {
   }
   checkHistory(): void {
     this.stateService.checkHistory();
+  }
+
+  storeUserDataToState(id: number) {
+    this.userExists.next(this.loggedInUserId = id);
+    this.apiService.getAccountById(id).pipe(
+      tap(responseData => {
+        this.stateService.updateUserState(responseData);
+      }, error => error)
+    );
+    this.apiService.getLeaveById(id).pipe(
+      tap(responseData => {
+        this.stateService.updateUserLeaveState(responseData);
+      }, error => error)
+    );
+    this.apiService.getAppliedLeaveById(id).pipe(
+      tap(responseData => {
+        this.stateService.updateUserAppliedLeaveState(responseData);
+      }, error => error)
+    );
+  }
+
+  getUserState(): User {
+    return this.stateService.getCurrentUserState();
+  }
+  getUserLeaveState(): Leave {
+    return this.stateService.getCurrentUserLeaveState();
+  }
+  getUserAppliedLeaveState(): AppliedLeave {
+    return this.stateService.getCurrentUserAppliedLeaveState();
   }
 }

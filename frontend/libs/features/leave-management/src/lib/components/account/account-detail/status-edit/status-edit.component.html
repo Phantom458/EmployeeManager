@@ -1,0 +1,42 @@
+<div class="col-md-12">
+  <app-alert
+    [message]="formMessage"
+    *ngIf="formMessage"
+    (close)="onHandleError()"
+  ></app-alert>
+  <form
+    [formGroup]="statusUpdateForm"
+    *ngIf="!submitted"
+    (ngSubmit)="onUpdate()">
+    <div class="form-group col-xs-6">
+      <h4>Update User Status</h4>
+      <hr>
+      <div class="row">
+        <div class="form-group radio" *ngFor="let status of statusList">
+          <label>
+            <input
+              type="radio"
+              formControlName="status" [value]="status"> {{ status }}
+          </label>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <button
+          [disabled]="!statusUpdateForm.valid"
+          class="btn btn-primary"
+          type="submit">
+          Submit
+        </button>
+      </div>
+      <div class="col-md-6">
+        <button
+          (click)="onBack()"
+          class="btn btn-primary"
+          type="button">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -19,7 +19,6 @@ import { LeaveManagerStoreState } from '../../../services/leave-manager-state.se
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  state$: Observable<LeaveManagerStoreState>;
   signUpForm: FormGroup;
   submitted = false;
   formMessage = '';
@@ -39,12 +38,10 @@ export class RegisterComponent implements OnInit {
               private leaveService: LeaveService,
               private authService: AuthService,
               private routes: Router,
-              private route: ActivatedRoute) {
-    this.facadeService.initialize();
-  }
+              private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.state$ = this.facadeService.stateChanged();
     this.initData();
   }
   initData() {

@@ -1,0 +1,60 @@
+<div class="row" *ngIf="state$ | async as state">
+  <div class="col-xs-12">
+    <frontend-alert
+      [message]="adminMessage"
+      *ngIf="adminMessage"
+      (close)="onHandleAdminMessage()">
+    </frontend-alert>
+    <h2>User Details</h2>
+    <hr>
+    <ul class="list-group">
+      <li
+        class="li list-group-item">
+        <h3> Name: {{ state.currentUser?.firstName }} {{ state.currentUser?.lastName }} </h3>
+        <p> ID: {{ state.currentUser?.id }} </p>
+        <p> Email: {{ state.currentUser?.email }} </p>
+        <p> Contact: {{ state.currentUser?.phone }}  </p>
+        <p> Status: {{ state.currentUser?.status }}  </p>
+      </li>
+    </ul>
+    <h2>Leave Details</h2>
+    <hr>
+    <table
+      class="list-group">
+      <tr>
+        <th>Type of Leave</th>
+        <th>Number of Days</th>
+        <th>Days Left</th>
+        <th>Days Taken</th>
+      </tr>
+      <tr *ngFor="let num of state.currentUserLeave?.leave">
+        <td>{{num.type | titlecase}}</td>
+        <td>{{num.numberOfDays}}</td>
+        <td>{{num.leaveLeft}}</td>
+        <td>{{num.leaveTaken}}</td>
+      </tr>
+    </table>
+    <small>{{ adminMessage }}</small>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="btn-group" frontendDropdown>
+      <button
+        type="button"
+        class="btn btn-primary button-toggle">
+        Manage
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a
+          style="cursor: pointer;"
+          (click)="onEdit()">Update Status</a></li>
+        <li><a
+          style="cursor: pointer;"
+          (click)="onDelete()">Remove Account</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

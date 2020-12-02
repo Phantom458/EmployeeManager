@@ -5,20 +5,20 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
-import { AlertComponent } from '../../misc/alert/alert.component';
+import { SharedComponentsModule } from '@frontend/shared-components';
 
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
-    RegisterComponent,
-    AlertComponent
+    RegisterComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedComponentsModule
   ],
   exports: [
   ]

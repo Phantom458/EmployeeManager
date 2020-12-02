@@ -1,0 +1,11 @@
+<div *ngIf="errorMessage">
+  <p>{{ errorMessage }}</p>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <frontend-account-display
+      *ngFor="let userEl of users"
+      [user]="userEl">
+    </frontend-account-display>
+  </div>
+</div>

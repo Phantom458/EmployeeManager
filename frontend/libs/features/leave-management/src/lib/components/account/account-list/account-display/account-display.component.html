@@ -1,0 +1,13 @@
+<div class="row">
+  <a
+    [routerLink]="['../' ,user.id, 'detail']"
+    routerLinkActive="active"
+    style="cursor: pointer;"
+    class="list-group-item clearfix">
+    <div class="pull-left">
+      <h4>{{ user.id }}. {{ user.firstName }} {{ user.lastName }}</h4>
+      <p>{{ user.status }}</p>
+      <p>{{ user.phone }}</p>
+    </div>
+  </a>
+</div>
