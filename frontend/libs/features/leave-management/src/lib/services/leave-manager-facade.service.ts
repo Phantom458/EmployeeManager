@@ -42,9 +42,19 @@ export class LeaveManagerFacadeService {
       }, error => error)
     );
   }
+  getAccountById(id: number): Observable<User> {
+    return this.apiService.getAccountById(id).pipe(
+      tap(responseData => {
+        return responseData;
+      }, error => error)
+    )
+  }
 
-  addAccount(account: Account) {
+  addAccount(account: Account): void {
     this.apiService.addAccount(account, this.additionalLeaveData, this.additionalAppliedLeaveData);
+  }
+  deleteAccount(id: number): void {
+    this.apiService.deleteAccount(id);
   }
 
   //*** Leave management ***
@@ -69,21 +79,19 @@ export class LeaveManagerFacadeService {
 
   storeUserDataToState(id: number) {
     this.userExists.next(this.loggedInUserId = id);
-    this.apiService.getAccountById(id).pipe(
-      tap(responseData => {
-        this.stateService.updateUserState(responseData);
-      }, error => error)
+    this.apiService.getAccountById(id).subscribe(
+      responseData => this.stateService.updateUserState(responseData)
     );
-    this.apiService.getLeaveById(id).pipe(
-      tap(responseData => {
-        this.stateService.updateUserLeaveState(responseData);
-      }, error => error)
+    this.apiService.getLeaveById(id).subscribe(
+      responseData => this.stateService.updateUserLeaveState(responseData)
     );
-    this.apiService.getAppliedLeaveById(id).pipe(
-      tap(responseData => {
-        this.stateService.updateUserAppliedLeaveState(responseData);
-      }, error => error)
+    this.apiService.getAppliedLeaveById(id).subscribe(
+      responseData => this.stateService.updateUserAppliedLeaveState(responseData)
     );
+  }
+  updateUserState(userData: User, id: number) {
+    this.stateService.updateUserState(userData);
+    this.apiService.updateAccount(userData, id);
   }
 
   getUserState(): User {

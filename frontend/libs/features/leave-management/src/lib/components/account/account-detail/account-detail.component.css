@@ -1,0 +1,8 @@
+table{
+  table-layout: fixed;
+  width: 100%;
+  background-color: whitesmoke;
+}
+th{
+  align-items: center;
+}

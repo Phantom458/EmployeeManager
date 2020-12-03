@@ -11,11 +11,7 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
-  },
-  // {
-  //   path: ':id/edit',
-  //   component: RegisterComponent
-  // }
+  }
 ];
 
 @NgModule({

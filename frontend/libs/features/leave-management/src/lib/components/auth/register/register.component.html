@@ -94,8 +94,8 @@
       </small>
     </div>
 
-    <strong *ngIf="userAuth == null">Status (Optional)</strong>
-    <div class="row" *ngIf="userAuth == null">
+    <strong *ngIf="userAuth === null">Status (Optional)</strong>
+    <div class="row" *ngIf="userAuth === null">
       <div class="form-group radio" *ngFor="let status of statusList">
         <label>
           <input
@@ -115,8 +115,8 @@
     </div>
     <div class="col-md-6">
       <button
-        *ngIf="userAuth == null"
-        (click)="onBack()"
+        *ngIf="userAuth === null"
+        (click)="onSignIn()"
         class="btn btn-primary"
         type="button">
         Sign In

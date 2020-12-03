@@ -6,8 +6,6 @@ import { User } from '../../../models/user.model';
 import { AccountService } from '../../../misc/temp-files/account.service';
 import { AuthService } from '../../../misc/temp-files/auth.service';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
-import { Observable } from 'rxjs';
-import { LeaveManagerStoreState } from '../../../services/leave-manager-state.service';
 
 @Component({
   selector: 'frontend-login',

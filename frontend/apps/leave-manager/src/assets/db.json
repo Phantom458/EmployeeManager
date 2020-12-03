@@ -12,17 +12,6 @@
       "role": "admin"
     },
     {
-      "id": 2,
-      "firstName": "Error",
-      "lastName": "Magnet",
-      "email": "errormagnet@gmail.com",
-      "phone": "+97517489859",
-      "password": "em1234",
-      "confirmPassword": "em1234",
-      "status": "On Leave",
-      "role": "user"
-    },
-    {
       "id": 3,
       "firstName": "No",
       "lastName": "One",
@@ -35,47 +24,28 @@
     },
     {
       "firstName": "Test",
-      "lastName": "Test",
+      "lastName": "Test2000",
       "email": "test@test.com",
       "phone": "12345678",
       "password": "123123",
       "confirmPassword": "123123",
       "status": "On Leave",
       "id": 4
+    },
+    {
+      "firstName": "New",
+      "lastName": "Account",
+      "email": "newaccount@gmail.com",
+      "phone": "000000000",
+      "password": "111111",
+      "confirmPassword": "111111",
+      "status": "",
+      "id": 5
     }
   ],
   "Leaves": [
     {
       "id": 1,
-      "leave": [
-        {
-          "type": "casual",
-          "numberOfDays": 30,
-          "leaveLeft": 30,
-          "leaveTaken": 0
-        },
-        {
-          "type": "sick",
-          "numberOfDays": 60,
-          "leaveLeft": 60,
-          "leaveTaken": 0
-        },
-        {
-          "type": "maternity",
-          "numberOfDays": 180,
-          "leaveLeft": 180,
-          "leaveTaken": 0
-        },
-        {
-          "type": "toil",
-          "numberOfDays": 50,
-          "leaveLeft": 50,
-          "leaveTaken": 0
-        }
-      ]
-    },
-    {
-      "id": 2,
       "leave": [
         {
           "type": "casual",
@@ -160,6 +130,35 @@
         }
       ],
       "id": 4
+    },
+    {
+      "leave": [
+        {
+          "type": "casual",
+          "numberOfDays": 30,
+          "leaveLeft": 30,
+          "leaveTaken": 0
+        },
+        {
+          "type": "sick",
+          "numberOfDays": 60,
+          "leaveLeft": 60,
+          "leaveTaken": 0
+        },
+        {
+          "type": "maternity",
+          "numberOfDays": 180,
+          "leaveLeft": 180,
+          "leaveTaken": 0
+        },
+        {
+          "type": "toil",
+          "numberOfDays": 50,
+          "leaveLeft": 50,
+          "leaveTaken": 0
+        }
+      ],
+      "id": 5
     }
   ],
   "Applied": [
@@ -169,14 +168,6 @@
       "startDate": "2020-11-15",
       "endDate": "2020-11-20",
       "daysApplied": 5
-    },
-    {
-      "id": 2,
-      "type": "toil",
-      "startDate": "2020-11-15",
-      "endDate": "2020-11-18",
-      "daysApplied": 3,
-      "adminMessage": "Your leave has been rejected. Please contact the HRM for details."
     },
     {
       "id": 3,
@@ -192,6 +183,13 @@
       "endDate": "",
       "daysApplied": 0,
       "id": 4
+    },
+    {
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
+      "id": 5
     }
   ]
 }

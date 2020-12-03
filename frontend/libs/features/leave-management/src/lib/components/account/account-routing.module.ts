@@ -3,6 +3,7 @@ import { AccountDetailComponent } from './account-detail/account-detail.componen
 import { AccountListComponent } from './account-list/account-list.component';
 import { StatusEditComponent } from './account-detail/status-edit/status-edit.component';
 import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from '../auth/register/register.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,12 @@ const routes: Routes = [
     component: AccountListComponent
   },
   {
-    path: ':id/edit',
+    path: ':id/edit/status',
     component: StatusEditComponent
+  },
+  {
+    path: ':id/edit',
+    component: RegisterComponent
   }
 ];
 

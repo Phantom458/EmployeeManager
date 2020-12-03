@@ -47,16 +47,22 @@ export class AccountDetailComponent implements OnInit {
 
   onEdit() {
     if (this.userAuth === 1) {
-      this.routes.navigate(['../edit'], {relativeTo: this.route});
+      this.routes.navigate(['../edit/status'], {relativeTo: this.route});
     } else {
-      this.routes.navigate(['user', this.userId, 'edit']);
+      this.routes.navigate(['../edit'], {relativeTo: this.route});
     }
   }
   onDelete() {
-    console.log('Delete Account');
+    this.facadeService.deleteAccount(this.userId);
+    this.adminMessage = 'Account has been successfully removed';
   }
 
   onHandleAdminMessage() {
-    this.adminMessage = null;
+    if (this.userAuth) {
+      this.adminMessage = null
+    } else {
+      this.facadeService.removeUser();
+      this.routes.navigate(['auth/login'])
+    }
   }
 }
