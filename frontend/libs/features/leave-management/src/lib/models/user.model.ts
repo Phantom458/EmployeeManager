@@ -7,4 +7,5 @@ export interface User {
   password: string;
   confirmPassword: string;
   status: string;
+  role?: string;
 }

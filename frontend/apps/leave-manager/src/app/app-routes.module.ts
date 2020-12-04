@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../../../../libs/features/leave-management/src/lib/misc/guards/auth.guard';
 
 const appRoutes: Routes = [
   //Default Path
@@ -10,11 +11,11 @@ const appRoutes: Routes = [
   },
 
   //Login and Register
-  { path: 'auth', loadChildren: () => import('../../../../libs/features/leave-management/src/lib/components/auth/auth.module').then(m => m.AuthModule) },
+  { path: 'auth', loadChildren: () => import('../../../../libs/features/leave-management/src/lib/components/auth/auth.module').then(m => m.AuthModule), },
 
   //Account
-  { path: 'user', loadChildren: () => import('../../../../libs/features/leave-management/src/lib/components/account/account.module').then(m => m.AccountModule) }
-
+  { path: 'user', loadChildren: () => import('../../../../libs/features/leave-management/src/lib/components/account/account.module').then(m => m.AccountModule),
+    canActivate: [AuthGuard]}
 ];
 
 @NgModule({

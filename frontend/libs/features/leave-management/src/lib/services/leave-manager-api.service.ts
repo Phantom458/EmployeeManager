@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
 import { AppliedLeave, Leave } from '../models/leave.model';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class LeaveManagerApiService {
   private accountURL = 'http://localhost:5000/Users';
   private leaveURL = 'http://localhost:5000/Leaves';
   private appliedURL = 'http://localhost:5000/Applied';
+  private loginUrl = 'http://localhost:5000/auth/login';
 
   constructor(private http: HttpClient) { }
 
@@ -45,15 +46,23 @@ export class LeaveManagerApiService {
   }
 
   //*** Leave actions ***
+  getAllLeave() : Observable<Leave[]> {
+    return this.http.get<Leave[]>(this.leaveURL)
+  }
   getLeaveById(id: number): Observable<Leave> {
     return this.http.get<Leave>(`${this.leaveURL}/${id}`)
   }
 
   //*** Leave management ***
   getAllAppliedLeave() : Observable<AppliedLeave[]> {
-    return this.http.get<AppliedLeave[]>(this.appliedURL).pipe(take(1))
+    return this.http.get<AppliedLeave[]>(this.appliedURL)
   }
   getAppliedLeaveById(id: number): Observable<AppliedLeave> {
-    return this.http.get<AppliedLeave>(`${this.appliedURL}/${id}`).pipe(take(1))
+    return this.http.get<AppliedLeave>(`${this.appliedURL}/${id}`).pipe(take(1));
+  }
+
+  //***JWT Authentication***
+  login(userData): Observable<any> {
+    return this.http.post<{access_token: string}>(this.loginUrl, userData);
   }
 }

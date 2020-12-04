@@ -11,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-
   userId: number;
   private subscription: Subscription;
 
@@ -31,6 +30,7 @@ export class NavBarComponent implements OnInit {
   }
 
   onLogout() {
+    this.facadeService.logout();
     this.facadeService.removeUser();
     this.routes.navigate(['auth/login']);
   }

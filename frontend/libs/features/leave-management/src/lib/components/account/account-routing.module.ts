@@ -4,6 +4,7 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { StatusEditComponent } from './account-detail/status-edit/status-edit.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from '../auth/register/register.component';
+import { AdminGuard } from '../../misc/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: AccountListComponent
+    component: AccountListComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: ':id/edit/status',

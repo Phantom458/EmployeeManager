@@ -7,6 +7,9 @@ export interface LeaveManagerStoreState{
   currentUser: User;
   currentUserLeave: Leave;
   currentUserAppliedLeave: AppliedLeave;
+  allUser: User[],
+  allLeave: Leave[],
+  allAppliedLeave: AppliedLeave[],
 }
 
 @Injectable({
@@ -24,7 +27,10 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
     const initialState = {
       currentUser: undefined,
       currentUserLeave: undefined,
-      currentUserAppliedLeave: undefined
+      currentUserAppliedLeave: undefined,
+      allUser: [],
+      aLeave: [],
+      allAppliedLeave: [],
     }
     this.setState(initialState, 'INIT_STATE');
   }
@@ -37,6 +43,15 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
   }
   updateUserAppliedLeaveState(appliedLeaveData?: AppliedLeave): void {
     this.setState({currentUserAppliedLeave: appliedLeaveData}, 'UPDATE_USER_APPLIED_LEAVE')
+  }
+  updateAllUserState(allUser?: User[]): void {
+    this.setState({allUser: allUser}, 'UPDATE_ALL_USER')
+  }
+  updateAllLeaveState(allLeave?: Leave[]): void {
+    this.setState({allLeave: allLeave}, 'UPDATE_ALL_USER_LEAVE')
+  }
+  updateAllAppliedLeaveState(allAppliedLeave?: AppliedLeave[]): void {
+    this.setState({allAppliedLeave: allAppliedLeave}, 'UPDATE_ALL_USER_APPLIED_LEAVE')
   }
 
   getCurrentUserState(): User {

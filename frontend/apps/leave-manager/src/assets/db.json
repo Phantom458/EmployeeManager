@@ -24,9 +24,9 @@
     },
     {
       "firstName": "Test",
-      "lastName": "Test2000",
+      "lastName": "Test2",
       "email": "test@test.com",
-      "phone": "12345678",
+      "phone": "21231",
       "password": "123123",
       "confirmPassword": "123123",
       "status": "On Leave",
@@ -40,7 +40,8 @@
       "password": "111111",
       "confirmPassword": "111111",
       "status": "",
-      "id": 5
+      "id": 5,
+      "role": "user"
     }
   ],
   "Leaves": [

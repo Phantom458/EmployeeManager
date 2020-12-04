@@ -1,4 +1,4 @@
-<div class="row" *ngIf="state$ | async as state">
+<div class="row">
   <div class="col-xs-12">
     <frontend-alert
       [message]="adminMessage"
@@ -10,11 +10,11 @@
     <ul class="list-group">
       <li
         class="li list-group-item">
-        <h3> Name: {{ state.currentUser?.firstName }} {{ state.currentUser?.lastName }} </h3>
-        <p> ID: {{ state.currentUser?.id }} </p>
-        <p> Email: {{ state.currentUser?.email }} </p>
-        <p> Contact: {{ state.currentUser?.phone }}  </p>
-        <p> Status: {{ state.currentUser?.status }}  </p>
+        <h3> Name: {{ targetUser?.firstName }} {{ targetUser?.lastName }} </h3>
+        <p> ID: {{ targetUser?.id }} </p>
+        <p> Email: {{ targetUser?.email }} </p>
+        <p> Contact: {{ targetUser?.phone }}  </p>
+        <p> Status: {{ targetUser?.status }}  </p>
       </li>
     </ul>
     <h2>Leave Details</h2>
@@ -27,7 +27,7 @@
         <th>Days Left</th>
         <th>Days Taken</th>
       </tr>
-      <tr *ngFor="let num of state.currentUserLeave?.leave">
+      <tr *ngFor="let num of targetLeave?.leave">
         <td>{{num.type | titlecase}}</td>
         <td>{{num.numberOfDays}}</td>
         <td>{{num.leaveLeft}}</td>
@@ -49,8 +49,13 @@
       </button>
       <ul class="dropdown-menu">
         <li><a
+          *ngIf="role"
           style="cursor: pointer;"
           (click)="onEdit()">Update Status</a></li>
+        <li><a
+          *ngIf="!role"
+          style="cursor: pointer;"
+          (click)="onEdit()">Edit Account</a></li>
         <li><a
           style="cursor: pointer;"
           (click)="onDelete()">Remove Account</a></li>

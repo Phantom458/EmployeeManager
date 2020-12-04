@@ -9,24 +9,26 @@
         <li routerLinkActive="active" *ngIf="userId > 1">
           <a
             role="button"
-            href="#">User
+            [routerLink]="['user', userId, 'detail']">User
           </a>
         </li>
         <li routerLinkActive="active" *ngIf="userId == 1">
           <a
-            href="#">Users
+            routerLink="user/list">Users
           </a>
           <!-- Leave Application for Users -->
         </li>
         <li routerLinkActive="active" *ngIf="userId > 1">
           <a
             role="button"
-            href="#">Leave Application
+            routerLink="leave/apply">Leave Application
           </a>
         </li>
         <!-- Leave Management for Admin -->
         <li routerLinkActive="active" *ngIf="userId == 1">
-          <a routerLink="leave/list">Manage Leave</a>
+          <a
+            role="button"
+            routerLink="leave/list">Manage Leave</a>
         </li>
       </ul>
     </div>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
 import { LeaveManagerStoreState } from '../../../services/leave-manager-state.service';
+import { User } from '../../../models/user.model';
+import { AppliedLeave, Leave } from '../../../models/leave.model';
 
 @Component({
   selector: 'frontend-account-detail',
@@ -13,10 +15,12 @@ import { LeaveManagerStoreState } from '../../../services/leave-manager-state.se
 })
 export class AccountDetailComponent implements OnInit {
   state$: Observable<LeaveManagerStoreState>;
+  targetUser: User;
+  targetLeave: Leave;
+  targetAppliedLeave: AppliedLeave;
   adminMessage: string;
-
   userId: number;
-  userAuth: number;
+  role = false;
   private subscription: Subscription;
 
   constructor(private route: ActivatedRoute,
@@ -25,11 +29,8 @@ export class AccountDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.state$ = this.facadeService.stateChanged()
-    this.state$.pipe(
-      tap(message => this.adminMessage = message.currentUserAppliedLeave.adminMessage)
-    );
     this.initData();
+    this.initStateData();
   }
   initData() {
     this.route.params
@@ -38,15 +39,27 @@ export class AccountDetailComponent implements OnInit {
           this.userId = +params['id'];
         }
       );
-    this.subscription = this.facadeService.checkUserExists().subscribe(
-      id => {
-        this.userAuth = id;
-      }
-    );
+    this.role = this.facadeService.isAdmin();
+    // this.subscription = this.facadeService.checkUserExists().subscribe(
+    //   id => {
+    //     this.userAuth = id;
+    //   }
+    // );
+  }
+  initStateData(): void {
+    this.state$ = this.facadeService.stateChanged();
+    this.state$.pipe(
+      tap(data => {
+        this.adminMessage = data.currentUserAppliedLeave?.adminMessage;
+        this.targetUser = data.allUser?.find(user => this.userId === user.id);
+        this.targetLeave = data.allLeave?.find(leave => this.userId === leave.id);
+        this.targetAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.userId === appliedLeave.id);
+      })
+    ).subscribe();
   }
 
   onEdit() {
-    if (this.userAuth === 1) {
+    if (this.facadeService.isAdmin()) {
       this.routes.navigate(['../edit/status'], {relativeTo: this.route});
     } else {
       this.routes.navigate(['../edit'], {relativeTo: this.route});
@@ -58,11 +71,7 @@ export class AccountDetailComponent implements OnInit {
   }
 
   onHandleAdminMessage() {
-    if (this.userAuth) {
-      this.adminMessage = null
-    } else {
       this.facadeService.removeUser();
       this.routes.navigate(['auth/login'])
-    }
   }
 }

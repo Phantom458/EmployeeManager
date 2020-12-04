@@ -20,6 +20,8 @@ export class LeaveManagerFacadeService {
 
   private loggedInUserId: number = null;
   private userExists = new BehaviorSubject<number>(this.loggedInUserId);
+  private loggedIn = false;
+  private loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
   constructor(private apiService: LeaveManagerApiService,
               private stateService: LeaveManagerStateService,
@@ -57,6 +59,15 @@ export class LeaveManagerFacadeService {
     this.apiService.deleteAccount(id);
   }
 
+  //***Leave Actions***
+  getAllLeave(): Observable<Leave[]> {
+    return this.apiService.getAllLeave().pipe(
+      tap(responseData => {
+        return responseData;
+      }, error => error)
+    );
+  }
+
   //*** Leave management ***
   getAllAppliedLeave(): Observable<AppliedLeave[]> {
     return this.apiService.getAllAppliedLeave().pipe(
@@ -89,6 +100,19 @@ export class LeaveManagerFacadeService {
       responseData => this.stateService.updateUserAppliedLeaveState(responseData)
     );
   }
+  storeAllDataToState(id: number) {
+    this.userExists.next(this.loggedInUserId = id);
+    this.storeUserDataToState(id);
+    this.apiService.getAllAccounts().subscribe(
+      responseData => this.stateService.updateAllUserState(responseData)
+    );
+    this.apiService.getAllLeave().subscribe(
+      responseData => this.stateService.updateAllLeaveState(responseData)
+    );
+    this.apiService.getAllAppliedLeave().subscribe(
+      responseData => this.stateService.updateAllAppliedLeaveState(responseData)
+    );
+  }
   updateUserState(userData: User, id: number) {
     this.stateService.updateUserState(userData);
     this.apiService.updateAccount(userData, id);
@@ -102,5 +126,26 @@ export class LeaveManagerFacadeService {
   }
   getUserAppliedLeaveState(): AppliedLeave {
     return this.stateService.getCurrentUserAppliedLeaveState();
+  }
+
+  //***JWT Authentication***
+  loginUser(userData) {
+    this.apiService.login(userData)
+      .subscribe(response => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        this.loggedIn$.next(this.loggedIn = true);
+      });
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn$.asObservable();
+  }
+  isAdmin(): boolean {
+    return JSON.parse(localStorage.getItem('user'))?.role === 'admin';
   }
 }
