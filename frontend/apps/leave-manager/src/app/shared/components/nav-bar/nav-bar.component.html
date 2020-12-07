@@ -21,7 +21,7 @@
         <li routerLinkActive="active" *ngIf="userId > 1">
           <a
             role="button"
-            routerLink="leave/apply">Leave Application
+            [routerLink]="['leave', userId, 'apply']">Leave Application
           </a>
         </li>
         <!-- Leave Management for Admin -->

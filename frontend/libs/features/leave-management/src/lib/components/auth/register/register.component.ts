@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { User } from '../../../models/user.model';
 import { LeaveService } from '../../../misc/temp-files/leave.service';
-import { passwordValidator } from '../../../misc/password.validator';
+import { passwordValidator } from '../../../misc/validators/password.validator';
 import { LeaveManagerApiService } from '../../../services/leave-manager-api.service';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
 

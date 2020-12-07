@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
 import { AppliedLeave, Leave } from '../models/leave.model';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +51,12 @@ export class LeaveManagerApiService {
   }
   getLeaveById(id: number): Observable<Leave> {
     return this.http.get<Leave>(`${this.leaveURL}/${id}`)
+  }
+  applyLeave(leaveApplied: {}, id: number): void {
+    this.http.patch<AppliedLeave[]>(`${this.appliedURL}/${id}`, leaveApplied)
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
   }
 
   //*** Leave management ***

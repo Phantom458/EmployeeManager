@@ -1,0 +1,18 @@
+<div class="row">
+  <a
+    *ngIf="appliedLeaveData?.type !== ''"
+    [routerLink]="['../', appliedLeaveData?.id, 'manage']"
+    routerLinkActive="active"
+    style="cursor: pointer;"
+    class="list-group-item clearfix">
+    <div class="pull-left">
+      <h3>Employee ID: {{ appliedLeaveData?.id }}</h3>
+      <h4 class="list-group-item-heading">Type of leave: </h4>
+      <p>{{ appliedLeaveData?.type | titlecase }}</p>
+      <h4 class="list-group-item-heading">Leave requested from: </h4>
+      <p class="list-group-item-text">
+        {{ appliedLeaveData?.startDate | date:'fullDate' }} to {{ appliedLeaveData?.endDate | date:'fullDate' }}
+      </p>
+    </div>
+  </a>
+</div>

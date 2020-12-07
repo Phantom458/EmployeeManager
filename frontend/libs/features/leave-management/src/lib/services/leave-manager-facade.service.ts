@@ -22,6 +22,7 @@ export class LeaveManagerFacadeService {
   private userExists = new BehaviorSubject<number>(this.loggedInUserId);
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+  private daysApplied: number;
 
   constructor(private apiService: LeaveManagerApiService,
               private stateService: LeaveManagerStateService,
@@ -75,6 +76,20 @@ export class LeaveManagerFacadeService {
         return responseData;
       }, error => error)
     );
+  }
+
+  applyLeave(id: number, type: string, startDate: string, endDate: string, interim: string) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    this.daysApplied = (end.getTime() - start.getTime())/(1000*3600*24);
+
+    const leaveApplied = {};
+    leaveApplied['type'] = type;
+    leaveApplied['startDate'] = startDate;
+    leaveApplied['endDate'] = endDate;
+    leaveApplied['daysApplied'] = this.daysApplied;
+    leaveApplied['interim'] = interim;
+    return this.apiService.applyLeave(leaveApplied, id);
   }
 
   //***State service actions***
