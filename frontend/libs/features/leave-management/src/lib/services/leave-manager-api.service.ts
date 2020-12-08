@@ -52,7 +52,7 @@ export class LeaveManagerApiService {
   }
 
   updateAccount(userData: User, id: number): void {
-    this.http.put<User>(`${this.accountURL}/${id}`, userData)
+    this.http.patch<User>(`${this.accountURL}/${id}`, userData)
       .subscribe(responseData => console.log(responseData));
   }
 

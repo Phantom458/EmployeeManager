@@ -1,9 +1,9 @@
 <div class="col-md-12">
-  <app-alert
+  <frontend-alert
     [message]="formMessage"
     *ngIf="formMessage"
     (close)="onHandleError()"
-  ></app-alert>
+  ></frontend-alert>
   <form
     [formGroup]="statusUpdateForm"
     *ngIf="!submitted"

@@ -49,11 +49,11 @@
       </button>
       <ul class="dropdown-menu">
         <li><a
-          *ngIf="role"
+          *ngIf="admin"
           style="cursor: pointer;"
           (click)="onEdit()">Update Status</a></li>
         <li><a
-          *ngIf="!role"
+          *ngIf="!admin"
           style="cursor: pointer;"
           (click)="onEdit()">Edit Account</a></li>
         <li><a

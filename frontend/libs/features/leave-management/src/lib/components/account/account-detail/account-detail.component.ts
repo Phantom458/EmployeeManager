@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
@@ -19,9 +19,8 @@ export class AccountDetailComponent implements OnInit {
   targetLeave: Leave;
   targetAppliedLeave: AppliedLeave;
   adminMessage: string;
-  userId: number;
-  role = false;
-  private subscription: Subscription;
+  id: number;
+  admin = false;
 
   constructor(private route: ActivatedRoute,
               private routes: Router,
@@ -36,19 +35,19 @@ export class AccountDetailComponent implements OnInit {
     this.route.params
       .subscribe(
         (params: Params) => {
-          this.userId = +params['id'];
+          this.id = +params['id'];
         }
       );
-    this.role = this.facadeService.isAdmin();
+    this.admin = this.facadeService.isAdmin();
   }
   initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
         this.adminMessage = data.currentUserAppliedLeave?.adminMessage;
-        this.targetUser = data.allUser?.find(user => this.userId === user.id);
-        this.targetLeave = data.allLeave?.find(leave => this.userId === leave.id);
-        this.targetAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.userId === appliedLeave.id);
+        this.targetUser = data.allUser?.find(user => this.id === user.id);
+        this.targetLeave = data.allLeave?.find(leave => this.id === leave.id);
+        this.targetAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.id === appliedLeave.id);
       })
     ).subscribe();
   }
@@ -61,7 +60,7 @@ export class AccountDetailComponent implements OnInit {
     }
   }
   onDelete() {
-    this.facadeService.deleteAccount(this.userId);
+    this.facadeService.deleteAccount(this.id);
     this.adminMessage = 'Account has been successfully removed';
   }
 

@@ -109,18 +109,6 @@ export class LeaveManagerFacadeService {
     this.stateService.checkHistory();
   }
 
-  storeUserDataToState(id: number) {
-    this.userExists.next(this.loggedInUserId = id);
-    this.apiService.getAccountById(id).subscribe(
-      responseData => this.stateService.updateUserState(responseData)
-    );
-    this.apiService.getLeaveById(id).subscribe(
-      responseData => this.stateService.updateUserLeaveState(responseData)
-    );
-    this.apiService.getAppliedLeaveById(id).subscribe(
-      responseData => this.stateService.updateUserAppliedLeaveState(responseData)
-    );
-  }
   storeAllDataToState(id: number) {
     this.userExists.next(this.loggedInUserId = id);
     this.apiService.getAllAccounts().subscribe(

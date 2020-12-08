@@ -36,12 +36,11 @@
       "firstName": "New",
       "lastName": "Account",
       "email": "newaccount@gmail.com",
-      "phone": "000000000",
-      "password": "111111",
-      "confirmPassword": "111111",
-      "status": "",
-      "id": 5,
-      "role": "user"
+      "phone": "123123123",
+      "password": "newguy",
+      "confirmPassword": "newguy",
+      "status": "At Work",
+      "id": 5
     }
   ],
   "Leaves": [
