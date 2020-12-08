@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-
+import { Observable, Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
-import { LeaveService } from '../../../misc/temp-files/leave.service';
 import { passwordValidator } from '../../../misc/validators/password.validator';
 import { LeaveManagerApiService } from '../../../services/leave-manager-api.service';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
+import { LeaveManagerStoreState } from '../../../services/leave-manager-state.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'frontend-register',
@@ -15,6 +15,7 @@ import { LeaveManagerFacadeService } from '../../../services/leave-manager-facad
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  state$: Observable<LeaveManagerStoreState>;
   signUpForm: FormGroup;
   submitted = false;
   formMessage = '';
@@ -30,7 +31,6 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private apiService: LeaveManagerApiService,
               private facadeService: LeaveManagerFacadeService,
-              private leaveService: LeaveService,
               private routes: Router,
               private route: ActivatedRoute
   ) {}
@@ -62,12 +62,22 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           userData => this.currentUser = userData
         );
+      this.initStateData();
     } else {
       this.facadeService.getAllAccounts()
         .subscribe(
           userData => this.userData = userData
         );
     }
+  }
+  initStateData() {
+    this.state$ = this.facadeService.stateChanged();
+    this.state$.pipe(
+      tap(data => {
+        this.userData = data.allUser;
+        this.currentUser = data.allUser?.find(user => this.id === user.id);
+      })
+    ).subscribe();
   }
 
   private initForm() {
@@ -98,7 +108,11 @@ export class RegisterComponent implements OnInit {
   private editSuccess() {
     this.submitted = true;
     this.signUpForm.get('status').setValue(this.currentUser.status);
-    this.facadeService.updateUserState(this.signUpForm.value, this.id);
+    this.userData?.splice(this.userData.findIndex(getUser => getUser.email === this.currentUser.email), 1, {
+      ...this.signUpForm.value, id: this.id
+    });
+    this.facadeService.updateUserState(this.userData);
+    this.facadeService.updateAccount(this.signUpForm.value, this.id)
     this.formMessage = 'Your changes have been saved';
   }
   checkDupeEmail(email: string) {

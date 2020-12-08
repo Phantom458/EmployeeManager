@@ -12,11 +12,11 @@ import { AppliedLeave, Leave } from '../models/leave.model';
   providedIn: 'root'
 })
 export class LeaveManagerFacadeService {
-  private additionalLeaveData = {"leave": [{"type": "casual", "numberOfDays": 30, "leaveLeft": 30, "leaveTaken": 0},
+  private defaultLeaveData = {"leave": [{"type": "casual", "numberOfDays": 30, "leaveLeft": 30, "leaveTaken": 0},
       {"type": "sick", "numberOfDays": 60, "leaveLeft": 60, "leaveTaken": 0},
       {"type": "maternity", "numberOfDays": 180, "leaveLeft": 180, "leaveTaken": 0},
       {"type": "toil", "numberOfDays": 50, "leaveLeft": 50, "leaveTaken": 0}]};
-  private additionalAppliedLeaveData = {"type": "", "startDate": "", "endDate": "", "daysApplied": 0};
+  private defaultAppliedLeaveData = {"type": "", "startDate": "", "endDate": "", "daysApplied": 0};
 
   private loggedInUserId: number = null;
   private userExists = new BehaviorSubject<number>(this.loggedInUserId);
@@ -53,8 +53,8 @@ export class LeaveManagerFacadeService {
     )
   }
 
-  addAccount(account: Account): void {
-    this.apiService.addAccount(account, this.additionalLeaveData, this.additionalAppliedLeaveData);
+  addAccount(account: User): void {
+    this.apiService.addAccount(account, this.defaultLeaveData, this.defaultAppliedLeaveData);
   }
   deleteAccount(id: number): void {
     this.apiService.deleteAccount(id);
@@ -91,6 +91,12 @@ export class LeaveManagerFacadeService {
     leaveApplied['interim'] = interim;
     return this.apiService.applyLeave(leaveApplied, id);
   }
+  resetLeave(id: number) {
+    this.apiService.updateAppliedLeave(this.defaultAppliedLeaveData, id);
+  }
+  acceptLeave(leaveData: {}, id: number) {
+    this.apiService.acceptLeave(leaveData, id);
+  }
 
   //***State service actions***
   initialize(): void {
@@ -117,7 +123,6 @@ export class LeaveManagerFacadeService {
   }
   storeAllDataToState(id: number) {
     this.userExists.next(this.loggedInUserId = id);
-    this.storeUserDataToState(id);
     this.apiService.getAllAccounts().subscribe(
       responseData => this.stateService.updateAllUserState(responseData)
     );
@@ -128,8 +133,10 @@ export class LeaveManagerFacadeService {
       responseData => this.stateService.updateAllAppliedLeaveState(responseData)
     );
   }
-  updateUserState(userData: User, id: number) {
+  updateUserState(userData: User[]) {
     this.stateService.updateUserState(userData);
+  }
+  updateAccount(userData: User, id: number) {
     this.apiService.updateAccount(userData, id);
   }
 

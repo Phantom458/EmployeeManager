@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4 class="list-group-item-heading">Leave amounts left for {{ userData?.firstName }} {{ userData?.lastName }}</h4>
+    <hr>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let leaveData of userLeaveLeft?.leave">
+        <p>{{ leaveData.type | titlecase }} : {{ leaveData.leaveLeft }}</p>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-12">
+    <ul class="list-group">
+      <h4>Leave Requested</h4>
+      <hr>
+      <li
+        class="list-group-item">
+        <p>Type of leave requested: {{ userAppliedLeave?.type | titlecase }} Leave </p>
+        <p>
+          From {{ userAppliedLeave?.startDate | date:'fullDate' }} to {{ userAppliedLeave?.endDate | date:'fullDate' }}
+        </p>
+        <p>Number of Days: {{ userAppliedLeave?.daysApplied }} Days</p>
+        <p *ngIf="userAppliedLeave?.interim">Interim Mentioned: {{ userAppliedLeave.interim }}</p>
+        <button
+          (click)="onApprove()"
+          class="btn btn-success"
+          type="button">Approve
+        </button>
+        |
+        <button
+          (click)="onReject()"
+          class="btn btn-danger"
+          type="button">Reject
+        </button>
+        |
+        <button
+          (click)="onCancel()"
+          class="btn btn-primary"
+          type="button">Cancel
+        </button>
+        |
+        <button
+          (click)="onCompleted()"
+          class="btn btn-success"
+          type="button">Completed
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -40,11 +40,6 @@ export class AccountDetailComponent implements OnInit {
         }
       );
     this.role = this.facadeService.isAdmin();
-    // this.subscription = this.facadeService.checkUserExists().subscribe(
-    //   id => {
-    //     this.userAuth = id;
-    //   }
-    // );
   }
   initStateData(): void {
     this.state$ = this.facadeService.stateChanged();

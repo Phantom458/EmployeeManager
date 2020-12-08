@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../../misc/guards/admin.guard';
 import { LeaveFormComponent } from './leave-form/leave-form.component';
 import { LeaveListComponent } from './leave-list/leave-list.component';
+import { LeaveManageComponent } from './leave-manage/leave-manage.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,11 @@ const routes: Routes = [
   {
     path: 'list',
     component: LeaveListComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: ':id/manage',
+    component: LeaveManageComponent,
     canActivate: [AdminGuard]
   }
 ];

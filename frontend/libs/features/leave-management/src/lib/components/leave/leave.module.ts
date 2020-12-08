@@ -7,13 +7,15 @@ import { LeaveComponent } from './leave.component';
 import { LeaveRoutingModule } from './leave-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '@frontend/shared-components';
+import { LeaveManageComponent } from './leave-manage/leave-manage.component';
 
 @NgModule({
   declarations: [
     LeaveListComponent,
     LeaveDisplayComponent,
     LeaveFormComponent,
-    LeaveComponent
+    LeaveComponent,
+    LeaveManageComponent
   ],
   imports: [
     CommonModule,

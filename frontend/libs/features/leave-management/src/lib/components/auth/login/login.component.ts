@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../models/user.model';
-import { AccountService } from '../../../misc/temp-files/account.service';
-import { AuthService } from '../../../misc/temp-files/auth.service';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
 import { delay } from 'rxjs/operators';
 import { AppliedLeave, Leave } from '../../../models/leave.model';
@@ -22,10 +20,8 @@ export class LoginComponent implements OnInit {
   errorMessage = "";
 
   constructor(private routes: Router,
-              private authService: AuthService,
               public formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private accountService: AccountService,
               private facadeService: LeaveManagerFacadeService
   ) {}
 

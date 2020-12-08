@@ -35,9 +35,10 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
     this.setState(initialState, 'INIT_STATE');
   }
 
-  updateUserState(userData?: User): void {
-    this.setState({currentUser: userData}, 'UPDATE_USER');
+  updateUserState(userData?: User[]): void {
+    this.setState({allUser: userData}, 'UPDATE_USER');
   }
+
   updateUserLeaveState(leaveData?: Leave): void {
     this.setState({currentUserLeave: leaveData}, 'UPDATE_USER_LEAVE');
   }
