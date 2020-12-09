@@ -39,12 +39,6 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
     this.setState({allUser: userData}, 'UPDATE_USER');
   }
 
-  updateUserLeaveState(leaveData?: Leave): void {
-    this.setState({currentUserLeave: leaveData}, 'UPDATE_USER_LEAVE');
-  }
-  updateUserAppliedLeaveState(appliedLeaveData?: AppliedLeave): void {
-    this.setState({currentUserAppliedLeave: appliedLeaveData}, 'UPDATE_USER_APPLIED_LEAVE')
-  }
   updateAllUserState(allUser?: User[]): void {
     this.setState({allUser: allUser}, 'UPDATE_ALL_USER')
   }
@@ -53,16 +47,6 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
   }
   updateAllAppliedLeaveState(allAppliedLeave?: AppliedLeave[]): void {
     this.setState({allAppliedLeave: allAppliedLeave}, 'UPDATE_ALL_USER_APPLIED_LEAVE')
-  }
-
-  getCurrentUserState(): User {
-    return this.getState().currentUser;
-  }
-  getCurrentUserLeaveState(): Leave {
-    return this.getState().currentUserLeave;
-  }
-  getCurrentUserAppliedLeaveState(): AppliedLeave {
-    return this.getState().currentUserAppliedLeave;
   }
 
   checkHistory(): void {

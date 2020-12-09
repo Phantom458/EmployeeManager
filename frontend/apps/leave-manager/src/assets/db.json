@@ -179,11 +179,12 @@
     },
     {
       "type": "",
-      "startDate": "",
+      "startDate": "`",
       "endDate": "",
       "daysApplied": 0,
       "id": 4,
-      "interim": ""
+      "interim": "",
+      "leaveType": ""
     },
     {
       "type": "",

@@ -60,18 +60,12 @@ export class LeaveManagerApiService {
   getAllLeave() : Observable<Leave[]> {
     return this.http.get<Leave[]>(this.leaveURL)
   }
-  getLeaveById(id: number): Observable<Leave> {
-    return this.http.get<Leave>(`${this.leaveURL}/${id}`)
-  }
 
   //*** Leave management ***
   getAllAppliedLeave() : Observable<AppliedLeave[]> {
     return this.http.get<AppliedLeave[]>(this.appliedURL)
   }
-  getAppliedLeaveById(id: number): Observable<AppliedLeave> {
-    return this.http.get<AppliedLeave>(`${this.appliedURL}/${id}`).pipe(take(1));
-  }
-  applyLeave(leaveApplied: {}, id: number): void {
+  applyLeave(leaveApplied: AppliedLeave, id: number): void {
     this.http.patch<AppliedLeave[]>(`${this.appliedURL}/${id}`, leaveApplied)
       .subscribe(responseData => {
         console.log(responseData);

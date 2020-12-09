@@ -4,6 +4,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateValidators } from '../../../misc/validators/date.validator';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
 import { AppliedLeave } from '../../../models/leave.model';
+import { Observable } from 'rxjs';
+import { LeaveManagerStoreState } from '../../../services/leave-manager-state.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'frontend-leave-form',
@@ -11,9 +14,11 @@ import { AppliedLeave } from '../../../models/leave.model';
   styleUrls: ['./leave-form.component.css']
 })
 export class LeaveFormComponent implements OnInit {
+  state$: Observable<LeaveManagerStoreState>;
   leaveForm: FormGroup;
   submitted = false;
   allAppliedLeave: AppliedLeave[];
+  activeUserAppliedLeave: AppliedLeave;
   private id: number;
 
   private selectedLeave: string;
@@ -21,10 +26,8 @@ export class LeaveFormComponent implements OnInit {
 
   leaveList = ['Casual', 'Sick', 'Maternity', 'Toil'];
 
-  get leaveType() { return this.leaveForm.get('leaveType'); }
   get startDate() { return this.leaveForm.get('startDate'); }
   get endDate() { return this.leaveForm.get('endDate'); }
-  get interim() { return this.leaveForm.get('interim'); }
 
   constructor(private formBuilder: FormBuilder,
               private facadeService: LeaveManagerFacadeService,
@@ -32,10 +35,11 @@ export class LeaveFormComponent implements OnInit {
               private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
-       this.initData();
+       this.initId();
        this.initForm();
+       this.initStateData();
   }
-  initData() {
+  initId() {
     this.facadeService.getAllAppliedLeave()
       .subscribe(allLeave => this.allAppliedLeave = allLeave);
     this.route.params
@@ -45,9 +49,18 @@ export class LeaveFormComponent implements OnInit {
         }
       )
   }
+  initStateData() {
+    this.state$ = this.facadeService.stateChanged();
+    this.state$.pipe(
+      tap(data => {
+        this.allAppliedLeave = data.allAppliedLeave;
+        this.activeUserAppliedLeave = data.allAppliedLeave?.find(user => this.id === user.id);
+      })
+    ).subscribe();
+  }
   initForm() {
     this.leaveForm = this.formBuilder.group({
-      leaveType: ['', [Validators.required]],
+      type: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
       interim: ['']
@@ -65,13 +78,16 @@ export class LeaveFormComponent implements OnInit {
   }
 
   onApply() {
-    const userLeave = this.allAppliedLeave.find(user => user.id === this.id);
-    const onLeave = userLeave.daysApplied;
+    const onLeave = this.activeUserAppliedLeave.daysApplied;
     if (onLeave !== 0) {
       this.alertMessage = "You cannot apply for more than one leave.";
     } else {
       this.submitted = true;
-      this.facadeService.applyLeave(this.id, this.leaveType.value, this.startDate.value, this.endDate.value, this.interim.value);
+      const daysApplied = this.facadeService.calculateDays(this.leaveForm.value);
+      const applyLeave = { ...this.leaveForm.value, id: this.id, daysApplied: daysApplied };
+      this.allAppliedLeave?.splice(this.allAppliedLeave.findIndex(getUser => getUser.id === this.activeUserAppliedLeave.id), 1, applyLeave);
+      this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+      this.facadeService.applyLeave(applyLeave, this.id);
       this.alertMessage = 'Leave has been applied';
     }
   }

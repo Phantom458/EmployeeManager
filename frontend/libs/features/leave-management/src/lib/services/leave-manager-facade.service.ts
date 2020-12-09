@@ -22,7 +22,6 @@ export class LeaveManagerFacadeService {
   private userExists = new BehaviorSubject<number>(this.loggedInUserId);
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
-  private daysApplied: number;
 
   constructor(private apiService: LeaveManagerApiService,
               private stateService: LeaveManagerStateService,
@@ -78,18 +77,16 @@ export class LeaveManagerFacadeService {
     );
   }
 
-  applyLeave(id: number, type: string, startDate: string, endDate: string, interim: string) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    this.daysApplied = (end.getTime() - start.getTime())/(1000*3600*24);
-
-    const leaveApplied = {};
-    leaveApplied['type'] = type;
-    leaveApplied['startDate'] = startDate;
-    leaveApplied['endDate'] = endDate;
-    leaveApplied['daysApplied'] = this.daysApplied;
-    leaveApplied['interim'] = interim;
-    return this.apiService.applyLeave(leaveApplied, id);
+  applyLeave(leaveData: AppliedLeave, id: number) {
+    this.apiService.applyLeave(leaveData, id);
+  }
+  updateAppliedLeaveState(leaveData: AppliedLeave[]) {
+    this.stateService.updateAllAppliedLeaveState(leaveData);
+  }
+  calculateDays(leaveData: AppliedLeave): number {
+    const start = new Date(leaveData.startDate);
+    const end = new Date(leaveData.endDate);
+    return ((end.getTime() - start.getTime())/(1000*3600*24));
   }
   resetLeave(id: number) {
     this.apiService.updateAppliedLeave(this.defaultAppliedLeaveData, id);
@@ -126,16 +123,6 @@ export class LeaveManagerFacadeService {
   }
   updateAccount(userData: User, id: number) {
     this.apiService.updateAccount(userData, id);
-  }
-
-  getUserState(): User {
-    return this.stateService.getCurrentUserState();
-  }
-  getUserLeaveState(): Leave {
-    return this.stateService.getCurrentUserLeaveState();
-  }
-  getUserAppliedLeaveState(): AppliedLeave {
-    return this.stateService.getCurrentUserAppliedLeaveState();
   }
 
   //***JWT Authentication***
