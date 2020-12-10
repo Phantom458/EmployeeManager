@@ -1,4 +1,4 @@
-export interface LeaveTypeModel {
+export interface LeaveType {
   type: string;
   numberOfDays: number;
   leaveLeft: number;
@@ -7,7 +7,7 @@ export interface LeaveTypeModel {
 
 export interface Leave {
   id?: number;
-  leave: LeaveTypeModel[]
+  leave: LeaveType[]
 }
 
 export interface AppliedLeave {
@@ -18,4 +18,5 @@ export interface AppliedLeave {
   daysApplied: number;
   interim?: string;
   adminMessage?: string;
+  leaveStatus?: string;
 }

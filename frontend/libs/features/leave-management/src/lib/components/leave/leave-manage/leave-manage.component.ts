@@ -15,9 +15,12 @@ import { tap } from 'rxjs/operators';
 export class LeaveManageComponent implements OnInit {
   state$: Observable<LeaveManagerStoreState>
   id: number;
-  userLeaveLeft: Leave;
-  userAppliedLeave: AppliedLeave;
+  allUserLeave: Leave[];
+  activeUserLeave: Leave;
+  allAppliedLeave: AppliedLeave[];
+  activeUserAppliedLeave: AppliedLeave;
   userData: User;
+  messageStatus: string;
 
   constructor(private facadeService: LeaveManagerFacadeService,
               private route: ActivatedRoute,
@@ -41,27 +44,48 @@ export class LeaveManageComponent implements OnInit {
     this.state$.pipe(
       tap(data => {
         this.userData = data.allUser?.find(user => this.id === user.id);
-        this.userLeaveLeft = data.allLeave?.find(leave => this.id === leave.id);
-        this.userAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.id === appliedLeave.id);
+        this.allUserLeave = data.allLeave;
+        this.activeUserLeave = data.allLeave?.find(leave => this.id === leave.id);
+        this.allAppliedLeave = data.allAppliedLeave;
+        this.activeUserAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.id === appliedLeave.id);
       })
     ).subscribe();
+    this.messageStatus = this.activeUserAppliedLeave?.leaveStatus;
   }
 
   onApprove() {
-    this.facadeService.acceptLeave(this.daysUpdate(), this.id);
+    const userInfo = {leaveStatus: 'Approved', adminMessage: 'Your application has been approved.'}
+    this.alterLeaveData();
+    this.alterAppliedLeaveData(userInfo);
+    this.facadeService.updateLeaveState(this.allUserLeave);
+    this.facadeService.updateLeave(this.activeUserLeave, this.id);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
     this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
-  daysUpdate() {
-    const days = this.userLeaveLeft.leave.find(x => x.type === this.userAppliedLeave.type)
-    const updateLeaveDays = {}
-    updateLeaveDays['leaveLeft'] = days.leaveLeft - this.userAppliedLeave.daysApplied;
-    updateLeaveDays['leaveTaken'] = days.leaveTaken + this.userAppliedLeave.daysApplied;
-    return updateLeaveDays;
+  alterLeaveData() {
+    const updatedDays = this.facadeService.updateLeaveTypeDays(this.activeUserLeave, this.activeUserAppliedLeave)
+    this.activeUserLeave.leave.splice(this.activeUserLeave.leave.findIndex(appliedType => appliedType.type === this.activeUserAppliedLeave.type), 1, updatedDays);
+    this.allUserLeave.splice(this.allUserLeave.findIndex(getUser => getUser.id === this.activeUserLeave.id), 1, this.activeUserLeave);
   }
+  alterAppliedLeaveData(info: {}) {
+    this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getLeave => getLeave.id === this.activeUserAppliedLeave.id), 1, {
+      ...this.activeUserAppliedLeave, ...info
+    });
+  }
+
   onReject() {
+    const userInfo = {leaveStatus: '', adminMessage: 'Your application has been rejected. Please contact admin for details'};
+    this.alterAppliedLeaveData(userInfo);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
     this.onCompleted();
   }
   onCancel() {
+    const userInfo = {leaveStatus: '', adminMessage: 'Your application has been cancelled.'};
+    this.alterAppliedLeaveData(userInfo);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
     this.onCompleted();
   }
   onCompleted() {

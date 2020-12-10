@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountComponent } from './account.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailComponent } from './account-detail/account-detail.component';
@@ -22,6 +21,7 @@ import { SharedComponentsModule } from '@frontend/shared-components';
   imports: [
     CommonModule,
     AccountRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     SharedComponentsModule
   ],

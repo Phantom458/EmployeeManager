@@ -5,7 +5,7 @@
     <ul class="list-group">
       <li
         class="list-group-item"
-        *ngFor="let leaveData of userLeaveLeft?.leave">
+        *ngFor="let leaveData of activeUserLeave?.leave">
         <p>{{ leaveData.type | titlecase }} : {{ leaveData.leaveLeft }}</p>
       </li>
     </ul>
@@ -22,7 +22,10 @@
         </p>
         <p>Number of Days: {{ userAppliedLeave?.daysApplied }} Days</p>
         <p *ngIf="userAppliedLeave?.interim">Interim Mentioned: {{ userAppliedLeave.interim }}</p>
+        <p>Status: {{ messageStatus }}</p>
+        |
         <button
+          *ngIf="messageStatus === 'Pending'"
           (click)="onApprove()"
           class="btn btn-success"
           type="button">Approve
@@ -41,10 +44,12 @@
         </button>
         |
         <button
+          *ngIf="messageStatus === 'Approved'"
           (click)="onCompleted()"
           class="btn btn-success"
           type="button">Completed
         </button>
+        |
       </li>
     </ul>
   </div>

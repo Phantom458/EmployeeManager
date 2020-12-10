@@ -73,9 +73,18 @@ export class LeaveManagerApiService {
   }
   acceptLeave(leaveData: {}, id: number) {
     this.http.patch<Leave>(`${this.leaveURL}/${id}`, leaveData)
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
   }
   updateAppliedLeave(leaveData: AppliedLeave, id: number) {
     this.http.patch<AppliedLeave[]>(`${this.appliedURL}/${id}`, leaveData)
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
+  }
+  updateAppliedLeaveInfo(leaveInfo: {}, id:number) {
+    this.http.patch<{}>(`${this.appliedURL}/${id}`, leaveInfo)
       .subscribe(responseData => {
         console.log(responseData);
       });

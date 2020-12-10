@@ -4,12 +4,9 @@ import { AppliedLeave, Leave } from '../models/leave.model';
 import { ObservableStore } from '@codewithdan/observable-store';
 
 export interface LeaveManagerStoreState{
-  currentUser: User;
-  currentUserLeave: Leave;
-  currentUserAppliedLeave: AppliedLeave;
   allUser: User[],
   allLeave: Leave[],
-  allAppliedLeave: AppliedLeave[],
+  allAppliedLeave: AppliedLeave[]
 }
 
 @Injectable({
@@ -25,31 +22,20 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
 
   initialState(): void {
     const initialState = {
-      currentUser: undefined,
-      currentUserLeave: undefined,
-      currentUserAppliedLeave: undefined,
       allUser: [],
-      aLeave: [],
-      allAppliedLeave: [],
+      allLeave: [],
+      allAppliedLeave: []
     }
     this.setState(initialState, 'INIT_STATE');
   }
 
-  updateUserState(userData?: User[]): void {
-    this.setState({allUser: userData}, 'UPDATE_USER');
-  }
-
   updateAllUserState(allUser?: User[]): void {
-    this.setState({allUser: allUser}, 'UPDATE_ALL_USER')
+    this.setState({allUser: allUser}, 'UPDATE_ALL_USER');
   }
   updateAllLeaveState(allLeave?: Leave[]): void {
-    this.setState({allLeave: allLeave}, 'UPDATE_ALL_USER_LEAVE')
+    this.setState({allLeave: allLeave}, 'UPDATE_ALL_USER_LEAVE');
   }
   updateAllAppliedLeaveState(allAppliedLeave?: AppliedLeave[]): void {
-    this.setState({allAppliedLeave: allAppliedLeave}, 'UPDATE_ALL_USER_APPLIED_LEAVE')
-  }
-
-  checkHistory(): void {
-    console.log(this.stateHistory);
+    this.setState({allAppliedLeave: allAppliedLeave}, 'UPDATE_ALL_USER_APPLIED_LEAVE');
   }
 }

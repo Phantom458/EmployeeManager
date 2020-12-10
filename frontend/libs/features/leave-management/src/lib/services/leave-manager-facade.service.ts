@@ -6,7 +6,7 @@ import { LeaveManagerApiService } from './leave-manager-api.service';
 import { LeaveManagerStateService, LeaveManagerStoreState } from './leave-manager-state.service';
 import { LeaveManagerBlService } from './leave-manager-bl.service';
 import { User } from '../models/user.model';
-import { AppliedLeave, Leave } from '../models/leave.model';
+import { AppliedLeave, Leave, LeaveType } from '../models/leave.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,8 @@ export class LeaveManagerFacadeService {
       {"type": "sick", "numberOfDays": 60, "leaveLeft": 60, "leaveTaken": 0},
       {"type": "maternity", "numberOfDays": 180, "leaveLeft": 180, "leaveTaken": 0},
       {"type": "toil", "numberOfDays": 50, "leaveLeft": 50, "leaveTaken": 0}]};
-  private defaultAppliedLeaveData = {"type": "", "startDate": "", "endDate": "", "daysApplied": 0};
+  private defaultAppliedLeaveData = {"type": "", "startDate": "", "endDate": "", "daysApplied": 0,
+    "interim": "", "leaveState": ""};
 
   private loggedInUserId: number = null;
   private userExists = new BehaviorSubject<number>(this.loggedInUserId);
@@ -51,9 +52,11 @@ export class LeaveManagerFacadeService {
       }, error => error)
     )
   }
-
   addAccount(account: User): void {
     this.apiService.addAccount(account, this.defaultLeaveData, this.defaultAppliedLeaveData);
+  }
+  updateAccount(userData: User, id: number) {
+    this.apiService.updateAccount(userData, id);
   }
   deleteAccount(id: number): void {
     this.apiService.deleteAccount(id);
@@ -76,12 +79,8 @@ export class LeaveManagerFacadeService {
       }, error => error)
     );
   }
-
   applyLeave(leaveData: AppliedLeave, id: number) {
     this.apiService.applyLeave(leaveData, id);
-  }
-  updateAppliedLeaveState(leaveData: AppliedLeave[]) {
-    this.stateService.updateAllAppliedLeaveState(leaveData);
   }
   calculateDays(leaveData: AppliedLeave): number {
     const start = new Date(leaveData.startDate);
@@ -91,8 +90,14 @@ export class LeaveManagerFacadeService {
   resetLeave(id: number) {
     this.apiService.updateAppliedLeave(this.defaultAppliedLeaveData, id);
   }
-  acceptLeave(leaveData: {}, id: number) {
+  updateLeave(leaveData: Leave, id: number) {
     this.apiService.acceptLeave(leaveData, id);
+  }
+  updateLeaveTypeDays(activeUserLeave: Leave, userAppliedLeave: AppliedLeave): LeaveType {
+    return this.blService.updateLeaveTypeDays(activeUserLeave, userAppliedLeave);
+  }
+  updateAppliedLeaveInfo(appliedLeaveInfo: {}, id: number) {
+    this.apiService.updateAppliedLeaveInfo(appliedLeaveInfo, id);
   }
 
   //***State service actions***
@@ -102,10 +107,6 @@ export class LeaveManagerFacadeService {
   stateChanged(): Observable<LeaveManagerStoreState> {
     return this.stateService.stateChanged;
   }
-  checkHistory(): void {
-    this.stateService.checkHistory();
-  }
-
   storeAllDataToState(id: number) {
     this.userExists.next(this.loggedInUserId = id);
     this.apiService.getAllAccounts().subscribe(
@@ -118,12 +119,16 @@ export class LeaveManagerFacadeService {
       responseData => this.stateService.updateAllAppliedLeaveState(responseData)
     );
   }
-  updateUserState(userData: User[]) {
-    this.stateService.updateUserState(userData);
+  updateUserState(userData: User[]): void {
+    this.stateService.updateAllUserState(userData);
   }
-  updateAccount(userData: User, id: number) {
-    this.apiService.updateAccount(userData, id);
+  updateLeaveState(leaveData: Leave[]): void {
+    this.stateService.updateAllLeaveState(leaveData);
   }
+  updateAppliedLeaveState(leaveData: AppliedLeave[]): void {
+    this.stateService.updateAllAppliedLeaveState(leaveData);
+  }
+
 
   //***JWT Authentication***
   loginUser(userData) {
@@ -134,7 +139,6 @@ export class LeaveManagerFacadeService {
         this.loggedIn$.next(this.loggedIn = true);
       });
   }
-
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

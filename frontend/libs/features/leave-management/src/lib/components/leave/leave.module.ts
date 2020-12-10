@@ -5,7 +5,7 @@ import { LeaveDisplayComponent } from './leave-list/leave-display/leave-display.
 import { LeaveFormComponent } from './leave-form/leave-form.component';
 import { LeaveComponent } from './leave.component';
 import { LeaveRoutingModule } from './leave-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '@frontend/shared-components';
 import { LeaveManageComponent } from './leave-manage/leave-manage.component';
 
@@ -20,6 +20,7 @@ import { LeaveManageComponent } from './leave-manage/leave-manage.component';
   imports: [
     CommonModule,
     LeaveRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     SharedComponentsModule
   ]

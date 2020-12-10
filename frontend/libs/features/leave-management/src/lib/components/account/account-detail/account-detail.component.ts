@@ -44,12 +44,12 @@ export class AccountDetailComponent implements OnInit {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
-        this.adminMessage = data.currentUserAppliedLeave?.adminMessage;
         this.targetUser = data.allUser?.find(user => this.id === user.id);
         this.targetLeave = data.allLeave?.find(leave => this.id === leave.id);
         this.targetAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.id === appliedLeave.id);
       })
     ).subscribe();
+    this.adminMessage = this.targetAppliedLeave?.adminMessage;
   }
 
   onEdit() {
@@ -65,7 +65,7 @@ export class AccountDetailComponent implements OnInit {
   }
 
   onHandleAdminMessage() {
-      this.facadeService.removeUser();
-      this.routes.navigate(['auth/login'])
+      // this.facadeService?.updateMessage({adminMessage: ""}, this.id);
+      this.adminMessage = null;
   }
 }
