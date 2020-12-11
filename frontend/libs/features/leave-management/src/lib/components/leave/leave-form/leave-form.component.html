@@ -12,8 +12,8 @@
     (ngSubmit)="onApply()">
     <div class="row">
       <div class="col-md-10">
-        <label for="leaveType">Type of leave</label>
-        <select id="leaveType" class="custom-select" (change)="changeLeave($event)" formControlName="leaveType">
+        <label for="type">Type of leave</label>
+        <select id="type" class="custom-select" (change)="changeLeave($event)" formControlName="type">
           <option>Choose the type of leave</option>
           <option
             *ngFor="let type of leaveList"
