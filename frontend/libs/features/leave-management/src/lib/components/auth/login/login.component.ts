@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../models/user.model';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
-import { delay } from 'rxjs/operators';
 import { AppliedLeave, Leave } from '../../../models/leave.model';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'frontend-login',
@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
   userData: User[];
   userLeave: Leave[];
   userAppliedLeave: AppliedLeave[];
-  private loginSuccess = false;
   userLog: FormGroup;
   errorMessage = "";
+  isLoggedIn = false;
 
   constructor(private routes: Router,
               public formBuilder: FormBuilder,
@@ -51,24 +51,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   onLogin() {
-    const user = this.activeUser;
     this.facadeService.loginUser(this.userLog.value);
-    this.userLoggedIn();
-    if(this.loginSuccess) {
-      this.facadeService.storeAllDataToState(user.id);
-      this.routes.navigate(['user', user.id, 'detail']);
-    } else {
-      this.errorMessage = 'Invalid credentials. Please try again'
-    }
-  }
-  userLoggedIn(): void {
-    this.facadeService.isLoggedIn().pipe(
-      delay(3000)
+    this.facadeService.isLoggedIn$().pipe(
+      delay(2000)
     ).subscribe(
-      value => this.loginSuccess = value
-    )
+      loggedIn => this.isLoggedIn = loggedIn
+    );
+    setTimeout(() => {
+      if(this.isLoggedIn) {
+        this.facadeService.storeAllDataToState();
+        this.routes.navigate(['user', this.activeUser.id, 'detail']);
+      } else {
+        this.errorMessage = 'Invalid credentials. Please try again';
+      }
+    }, 4000);
   }
 
   onRegister(){

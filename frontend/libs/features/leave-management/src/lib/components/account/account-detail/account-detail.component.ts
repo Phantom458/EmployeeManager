@@ -38,7 +38,9 @@ export class AccountDetailComponent implements OnInit {
           this.id = +params['id'];
         }
       );
-    this.admin = this.facadeService.isAdmin();
+    this.facadeService.isAdmin$().subscribe(
+      admin => this.admin = admin
+    );
   }
   initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
@@ -53,7 +55,7 @@ export class AccountDetailComponent implements OnInit {
   }
 
   onEdit() {
-    if (this.facadeService.isAdmin()) {
+    if (this.admin) {
       this.routes.navigate(['../edit/status'], {relativeTo: this.route});
     } else {
       this.routes.navigate(['../edit'], {relativeTo: this.route});

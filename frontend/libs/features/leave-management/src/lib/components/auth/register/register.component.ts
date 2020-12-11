@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../../../models/user.model';
 import { passwordValidator } from '../../../misc/validators/password.validator';
 import { LeaveManagerApiService } from '../../../services/leave-manager-api.service';
@@ -19,10 +19,10 @@ export class RegisterComponent implements OnInit {
   signUpForm: FormGroup;
   submitted = false;
   formMessage = '';
-  private subscription: Subscription;
 
   id: number;
-  userAuth: number = null;
+  isAdmin = false;
+  isLoggedIn = false;
   userData: User[];
   currentUser: User;
 
@@ -38,36 +38,34 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.initialId();
     this.initialData();
+    this.initForm();
   }
   initialId() {
-    this.subscription = this.facadeService.checkUserExists().subscribe(
-      id => {
-        this.userAuth = id;
-      },
-      err => {
-        console.error(`An error occurred: ${err.message}`);
-      }
-    );
     this.route.params
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.initForm();
         }
       )
   }
   initialData() {
+    this.facadeService.isAdmin$().subscribe(
+      admin => this.isAdmin = admin
+    );
+    this.facadeService.isLoggedIn$().subscribe(
+      loggedIn => this.isLoggedIn = loggedIn
+    );
     if (this.id) {
       this.facadeService.getAccountById(this.id)
         .subscribe(
           userData => this.currentUser = userData
         );
-      this.initStateData();
-    } else {
       this.facadeService.getAllAccounts()
         .subscribe(
           userData => this.userData = userData
         );
+    } else {
+      this.initStateData();
     }
   }
   initStateData() {
@@ -93,11 +91,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(){
-    if (this.id == null && this.checkDupeEmail(this.email.value)) {
+    if (this.isLoggedIn === false && this.checkDupeEmail(this.email.value)) {
       this.formMessage = 'This email has already been registered. SignIn to continue';
     } else {
-      this.submitted = true;
-      (this.id > 1)? this.editSuccess() : this.registerSuccess()
+      (this.isLoggedIn === true)? this.editSuccess() : this.registerSuccess()
     }
   }
   private registerSuccess() {
@@ -131,7 +128,7 @@ export class RegisterComponent implements OnInit {
 
   onHandleError() {
     this.formMessage = null;
-    (this.id >= 1)? this.routes.navigate(['../detail'], {relativeTo: this.route})
+    (this.isLoggedIn === true)? this.routes.navigate(['../detail'], {relativeTo: this.route})
       : this.routes.navigate(['auth/login']);
   }
 

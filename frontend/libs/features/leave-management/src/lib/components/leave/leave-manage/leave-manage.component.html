@@ -16,12 +16,12 @@
       <hr>
       <li
         class="list-group-item">
-        <p>Type of leave requested: {{ userAppliedLeave?.type | titlecase }} Leave </p>
+        <p>Type of leave requested: {{ activeUserAppliedLeave?.type | titlecase }} Leave </p>
         <p>
-          From {{ userAppliedLeave?.startDate | date:'fullDate' }} to {{ userAppliedLeave?.endDate | date:'fullDate' }}
+          From {{ activeUserAppliedLeave?.startDate | date:'fullDate' }} to {{ activeUserAppliedLeave?.endDate | date:'fullDate' }}
         </p>
-        <p>Number of Days: {{ userAppliedLeave?.daysApplied }} Days</p>
-        <p *ngIf="userAppliedLeave?.interim">Interim Mentioned: {{ userAppliedLeave.interim }}</p>
+        <p>Number of Days: {{ activeUserAppliedLeave?.daysApplied }} Days</p>
+        <p *ngIf="activeUserAppliedLeave?.interim">Interim Mentioned: {{ activeUserAppliedLeave.interim }}</p>
         <p>Status: {{ messageStatus }}</p>
         |
         <button

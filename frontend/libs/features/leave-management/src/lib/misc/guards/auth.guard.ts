@@ -14,11 +14,11 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let userExist = false;
-    this.facadeService.isLoggedIn().subscribe(
-      value => userExist = value
+    let access = false;
+    this.facadeService.isLoggedIn$().subscribe(
+      loggedIn => access = loggedIn
     );
-    if (userExist) {
+    if (access) {
       return true;
     } else {
       this.routes.createUrlTree(['/']);

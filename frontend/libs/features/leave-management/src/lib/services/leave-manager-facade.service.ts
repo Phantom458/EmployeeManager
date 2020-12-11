@@ -19,8 +19,8 @@ export class LeaveManagerFacadeService {
   private defaultAppliedLeaveData = {"type": "", "startDate": "", "endDate": "", "daysApplied": 0,
     "interim": "", "leaveState": ""};
 
-  private loggedInUserId: number = null;
-  private userExists = new BehaviorSubject<number>(this.loggedInUserId);
+  private admin = false;
+  private admin$ = new BehaviorSubject<boolean>(this.admin);
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
@@ -30,11 +30,15 @@ export class LeaveManagerFacadeService {
   ) { }
 
   //***Auth actions***
-  checkUserExists(): Observable<number> {
-    return this.userExists.asObservable();
+  isLoggedIn$(): Observable<boolean> {
+    return this.loggedIn$.asObservable();
+  }
+  isAdmin$(): Observable<boolean> {
+    return this.admin$.asObservable();
   }
   removeUser(): void {
-    this.userExists.next(this.loggedInUserId = null);
+    this.loggedIn$.next(this.loggedIn = false);
+    this.admin$.next(this.admin = false);
   }
 
   //*** Account actions ***
@@ -107,8 +111,7 @@ export class LeaveManagerFacadeService {
   stateChanged(): Observable<LeaveManagerStoreState> {
     return this.stateService.stateChanged;
   }
-  storeAllDataToState(id: number) {
-    this.userExists.next(this.loggedInUserId = id);
+  storeAllDataToState() {
     this.apiService.getAllAccounts().subscribe(
       responseData => this.stateService.updateAllUserState(responseData)
     );
@@ -132,21 +135,41 @@ export class LeaveManagerFacadeService {
 
   //***JWT Authentication***
   loginUser(userData) {
-    this.apiService.login(userData)
-      .subscribe(response => {
+    this.apiService.login(userData).pipe(
+      tap(response => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+      }))
+      .subscribe();
+    this.updateAuth();
+  }
+  updateAuth() {
+    setTimeout(() => {
+      if(this.isAdmin()) {
         this.loggedIn$.next(this.loggedIn = true);
-      });
+        this.admin$.next(this.admin = true);
+      } else if(this.isLoggedIn()) {
+        this.loggedIn$.next(this.loggedIn = true);
+      }
+    }, 1000);
   }
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.admin$.next(this.admin = false);
+    this.loggedIn$.next(this.loggedIn = false);
   }
-  isLoggedIn(): Observable<boolean> {
-    return this.loggedIn$.asObservable();
+  isLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
   }
   isAdmin(): boolean {
     return JSON.parse(localStorage.getItem('user'))?.role === 'admin';
   }
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+  // isAuthenticated(): boolean {
+  //   const token = this.getToken();
+  //   return tokenNotExpired(null, token);
+  // }
 }

@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SharedComponentsModule } from '@frontend/shared-components';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { AppRoutesModule } from './app-routes.module';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { LeaveManagerInterceptorService } from '../../../../libs/features/leave-management/src/lib/services/leave-manager-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,13 @@ import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
       }
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LeaveManagerInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   exports: [
   ]

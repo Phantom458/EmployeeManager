@@ -94,8 +94,8 @@
       </small>
     </div>
 
-    <strong *ngIf="userAuth === null">Status (Optional)</strong>
-    <div class="row" *ngIf="userAuth === null">
+    <strong *ngIf="isLoggedIn === false">Status (Optional)</strong>
+    <div class="row" *ngIf="isLoggedIn === false">
       <div class="form-group radio" *ngFor="let status of statusList">
         <label>
           <input
@@ -115,7 +115,7 @@
     </div>
     <div class="col-md-6">
       <button
-        *ngIf="userAuth === null"
+        *ngIf="isLoggedIn === false"
         (click)="onSignIn()"
         class="btn btn-primary"
         type="button">
@@ -124,7 +124,7 @@
     </div>
     <div class="col-md-6">
       <button
-        *ngIf="userAuth != null"
+        *ngIf="isLoggedIn === true"
         (click)="onCancel()"
         class="btn btn-primary"
         type="button">

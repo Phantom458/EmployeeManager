@@ -41,7 +41,6 @@ export class LeaveManagerApiService {
     this.http.post<AppliedLeave>(this.appliedURL, appliedLeave)
       .subscribe(responseData => {console.log(responseData)});
   }
-
   deleteAccount(id: number): void {
     this.http.delete<User>(`${this.accountURL}/${id}`)
       .subscribe(responseData => {console.log(responseData)});
@@ -50,7 +49,6 @@ export class LeaveManagerApiService {
     this.http.delete<AppliedLeave>(`${this.appliedURL}/${id}`)
       .subscribe(responseData => {console.log(responseData)});
   }
-
   updateAccount(userData: User, id: number): void {
     this.http.patch<User>(`${this.accountURL}/${id}`, userData)
       .subscribe(responseData => console.log(responseData));

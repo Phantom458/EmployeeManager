@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 
 // tslint:disable-next-line:nx-enforce-module-boundaries
 import { LeaveManagerFacadeService } from 'libs/features/leave-management/src/lib/services/leave-manager-facade.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'frontend-nav-bar',
@@ -12,20 +12,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   userId: number;
-  private subscription: Subscription;
+  admin = false;
+  userExist = false;
 
   constructor(public facadeService: LeaveManagerFacadeService,
               private routes: Router
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.facadeService.checkUserExists().subscribe(
-      id => {
-        this.userId = id;
-      },
-      err => {
-        console.error(`An error occurred: ${err.message}`);
-      }
+    this.initData();
+  }
+  initData() {
+    this.facadeService.isAdmin$().subscribe(
+      admin => this.admin = admin
+    );
+    this.facadeService.isLoggedIn$().subscribe(
+      loggedIn => this.userExist = loggedIn
     );
   }
 

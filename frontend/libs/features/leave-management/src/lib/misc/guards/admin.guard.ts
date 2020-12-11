@@ -13,7 +13,11 @@ export class AdminGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.facadeService.isAdmin()) {
+    let access = false;
+    this.facadeService.isAdmin$().subscribe(
+      admin => access = admin
+    )
+    if (access) {
       return true;
     } else {
       this.routes.createUrlTree(['/']);
