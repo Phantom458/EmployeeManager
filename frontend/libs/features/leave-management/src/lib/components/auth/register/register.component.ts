@@ -19,13 +19,11 @@ export class RegisterComponent implements OnInit {
   signUpForm: FormGroup;
   submitted = false;
   formMessage = '';
-
   id: number;
   isAdmin = false;
   isLoggedIn = false;
   userData: User[];
   currentUser: User;
-
   statusList=['At Work', 'On Leave', 'Inactive'];
 
   constructor(private formBuilder: FormBuilder,
@@ -55,11 +53,7 @@ export class RegisterComponent implements OnInit {
     this.facadeService.isLoggedIn$().subscribe(
       loggedIn => this.isLoggedIn = loggedIn
     );
-    if (this.id) {
-      this.facadeService.getAccountById(this.id)
-        .subscribe(
-          userData => this.currentUser = userData
-        );
+    if (!this.id) {
       this.facadeService.getAllAccounts()
         .subscribe(
           userData => this.userData = userData
