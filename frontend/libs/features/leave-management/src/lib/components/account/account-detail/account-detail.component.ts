@@ -76,7 +76,7 @@ export class AccountDetailComponent implements OnInit {
   }
 
   onHandleAdminMessage() {
-      this.removeMessage();this.routes.navigate(['auth/login'])
+      this.removeMessage();
       this.facadeService?.updateMessage(this.allAppliedLeave);
       this.adminMessage = null;
   }

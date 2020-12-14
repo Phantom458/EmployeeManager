@@ -259,12 +259,14 @@
     },
     {
       "id": 4,
-      "type": "casual",
-      "startDate": "2020-11-15",
-      "endDate": "2020-11-20",
-      "daysApplied": 5,
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
       "leaveStatus": "Approved",
-      "adminMessage": "Your application has been approved."
+      "adminMessage": "Your application has been approved.",
+      "interim": "",
+      "leaveState": ""
     },
     {
       "type": "",
