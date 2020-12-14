@@ -23,6 +23,7 @@ export class LeaveManagerFacadeService {
   private admin$ = new BehaviorSubject<boolean>(this.admin);
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
+  private daysApplied: number;
 
   constructor(private apiService: LeaveManagerApiService,
               private stateService: LeaveManagerStateService,
@@ -103,6 +104,9 @@ export class LeaveManagerFacadeService {
   updateAppliedLeaveInfo(appliedLeaveInfo: {}, id: number) {
     this.apiService.updateAppliedLeaveInfo(appliedLeaveInfo, id);
   }
+  updateMessage(appliedLeave: AppliedLeave[]) {
+    this.stateService.updateAllAppliedLeaveState(appliedLeave);
+  }
 
   //***State service actions***
   initialize(): void {
@@ -131,7 +135,6 @@ export class LeaveManagerFacadeService {
   updateAppliedLeaveState(leaveData: AppliedLeave[]): void {
     this.stateService.updateAllAppliedLeaveState(leaveData);
   }
-
 
   //***JWT Authentication***
   loginUser(userData) {
