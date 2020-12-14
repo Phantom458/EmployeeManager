@@ -105,9 +105,6 @@ export class LeaveManagerFacadeService {
   stateChanged(): Observable<LeaveManagerStoreState> {
     return this.stateService.stateChanged;
   }
-  checkHistory(): void {
-    this.stateService.checkHistory();
-  }
 
   storeAllDataToState(id: number) {
     this.userExists.next(this.loggedInUserId = id);
@@ -126,6 +123,9 @@ export class LeaveManagerFacadeService {
   }
   updateAccount(userData: User, id: number) {
     this.apiService.updateAccount(userData, id);
+  }
+  updateAppliedLeaveState(appliedLeave: AppliedLeave[]) {
+    this.stateService.updateAllAppliedLeaveState(appliedLeave);
   }
 
   getUserState(): User {

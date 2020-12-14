@@ -18,6 +18,7 @@ export class AccountDetailComponent implements OnInit {
   targetUser: User;
   targetLeave: Leave;
   targetAppliedLeave: AppliedLeave;
+  allAppliedLeave: AppliedLeave[];
   adminMessage: string;
   id: number;
   admin = false;
@@ -44,12 +45,13 @@ export class AccountDetailComponent implements OnInit {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
-        this.adminMessage = data.currentUserAppliedLeave?.adminMessage;
         this.targetUser = data.allUser?.find(user => this.id === user.id);
         this.targetLeave = data.allLeave?.find(leave => this.id === leave.id);
+        this.allAppliedLeave = data.allAppliedLeave;
         this.targetAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.id === appliedLeave.id);
       })
     ).subscribe();
+    this.adminMessage = this.targetAppliedLeave?.adminMessage;
   }
 
   onEdit() {
@@ -64,8 +66,15 @@ export class AccountDetailComponent implements OnInit {
     this.adminMessage = 'Account has been successfully removed';
   }
 
+  removeMessage() {
+    this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getUser => getUser.id === this.targetAppliedLeave.id), 1, {
+      ...this.targetAppliedLeave, adminMessage = ''
+    })
+    this.facadeService.resetLeave(this.id);
+  }
+
   onHandleAdminMessage() {
-      this.facadeService.removeUser();
+      this.removeMessage();
       this.routes.navigate(['auth/login'])
   }
 }
