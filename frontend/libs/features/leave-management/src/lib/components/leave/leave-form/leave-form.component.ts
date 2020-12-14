@@ -20,14 +20,9 @@ export class LeaveFormComponent implements OnInit {
   allAppliedLeave: AppliedLeave[];
   activeUserAppliedLeave: AppliedLeave;
   private id: number;
-
   private selectedLeave: string;
   alertMessage = null;
-
   leaveList = ['Casual', 'Sick', 'Maternity', 'Toil'];
-
-  get startDate() { return this.leaveForm.get('startDate'); }
-  get endDate() { return this.leaveForm.get('endDate'); }
 
   constructor(private formBuilder: FormBuilder,
               private facadeService: LeaveManagerFacadeService,
@@ -40,8 +35,6 @@ export class LeaveFormComponent implements OnInit {
        this.initStateData();
   }
   initId() {
-    this.facadeService.getAllAppliedLeave()
-      .subscribe(allLeave => this.allAppliedLeave = allLeave);
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -71,7 +64,7 @@ export class LeaveFormComponent implements OnInit {
   changeLeave(e) {
     const {value} = e.target;
     this.selectedLeave = value;
-    this.leaveForm.get('leaveType').setValue(e.target.value, {
+    this.leaveForm.get('type').setValue(e.target.value, {
       onlySelf: true
     })
     return true;
@@ -91,7 +84,6 @@ export class LeaveFormComponent implements OnInit {
       this.alertMessage = 'Leave has been applied';
     }
   }
-
   onHandleMessage() {
     this.alertMessage = null;
     this.onCancel();
@@ -99,4 +91,7 @@ export class LeaveFormComponent implements OnInit {
   onCancel() {
     this.routes.navigate(['user', this.id, 'detail'])
   }
+
+  get startDate() { return this.leaveForm.get('startDate'); }
+  get endDate() { return this.leaveForm.get('endDate'); }
 }
