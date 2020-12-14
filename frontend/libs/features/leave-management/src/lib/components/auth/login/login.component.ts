@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     );
     setTimeout(() => {
       if(this.isLoggedIn) {
-        this.facadeService.storeAllDataToState();
+        this.facadeService.storeAllDataToState(this.activeUser.id);
         this.routes.navigate(['user', this.activeUser.id, 'detail']);
       } else {
         this.errorMessage = 'Invalid credentials. Please try again';

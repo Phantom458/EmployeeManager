@@ -23,7 +23,6 @@ export class LeaveManagerFacadeService {
   private admin$ = new BehaviorSubject<boolean>(this.admin);
   private loggedIn = false;
   private loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
-  private daysApplied: number;
 
   constructor(private apiService: LeaveManagerApiService,
               private stateService: LeaveManagerStateService,
@@ -49,13 +48,6 @@ export class LeaveManagerFacadeService {
         return responseData;
       }, error => error)
     );
-  }
-  getAccountById(id: number): Observable<User> {
-    return this.apiService.getAccountById(id).pipe(
-      tap(responseData => {
-        return responseData;
-      }, error => error)
-    )
   }
   addAccount(account: User): void {
     this.apiService.addAccount(account, this.defaultLeaveData, this.defaultAppliedLeaveData);
@@ -93,7 +85,7 @@ export class LeaveManagerFacadeService {
     return ((end.getTime() - start.getTime())/(1000*3600*24));
   }
   resetLeave(id: number) {
-    this.apiService.updateAppliedLeave(this.defaultAppliedLeaveData, id);
+    this.apiService.updateAppliedLeave({ ...this.defaultAppliedLeaveData, adminMessage: '' }, id);
   }
   updateLeave(leaveData: Leave, id: number) {
     this.apiService.acceptLeave(leaveData, id);
@@ -115,7 +107,7 @@ export class LeaveManagerFacadeService {
   stateChanged(): Observable<LeaveManagerStoreState> {
     return this.stateService.stateChanged;
   }
-  storeAllDataToState() {
+  storeAllDataToState(id: number) {
     this.apiService.getAllAccounts().subscribe(
       responseData => this.stateService.updateAllUserState(responseData)
     );
@@ -125,6 +117,7 @@ export class LeaveManagerFacadeService {
     this.apiService.getAllAppliedLeave().subscribe(
       responseData => this.stateService.updateAllAppliedLeaveState(responseData)
     );
+    this.stateService.updateId(id);
   }
   updateUserState(userData: User[]): void {
     this.stateService.updateAllUserState(userData);

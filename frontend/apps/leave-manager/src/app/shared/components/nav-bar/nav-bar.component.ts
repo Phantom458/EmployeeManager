@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-
 // tslint:disable-next-line:nx-enforce-module-boundaries
 import { LeaveManagerFacadeService } from 'libs/features/leave-management/src/lib/services/leave-manager-facade.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+// tslint:disable-next-line:nx-enforce-module-boundaries
+import { LeaveManagerStoreState } from '../../../../../../../libs/features/leave-management/src/lib/services/leave-manager-state.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'frontend-nav-bar',
@@ -11,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+  state$: Observable<LeaveManagerStoreState>;
   userId: number;
   admin = false;
   userExist = false;
@@ -23,6 +26,11 @@ export class NavBarComponent implements OnInit {
     this.initData();
   }
   initData() {
+    this.state$ = this.facadeService.stateChanged();
+    this.state$.pipe(
+      tap(data => {
+        this.userId = data.activeId})
+    ).subscribe();
     this.facadeService.isAdmin$().subscribe(
       admin => this.admin = admin
     );

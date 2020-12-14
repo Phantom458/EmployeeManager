@@ -71,7 +71,7 @@ export class AccountDetailComponent implements OnInit {
   removeMessage() {
     this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getUser => getUser.id === this.targetAppliedLeave.id), 1, {
       ...this.targetAppliedLeave, adminMessage: ''
-    })
+    });
     this.facadeService.resetLeave(this.id);
   }
 

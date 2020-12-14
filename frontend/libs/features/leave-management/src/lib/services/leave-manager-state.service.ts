@@ -6,7 +6,8 @@ import { ObservableStore } from '@codewithdan/observable-store';
 export interface LeaveManagerStoreState{
   allUser: User[],
   allLeave: Leave[],
-  allAppliedLeave: AppliedLeave[]
+  allAppliedLeave: AppliedLeave[],
+  activeId: number
 }
 
 @Injectable({
@@ -24,7 +25,8 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
     const initialState = {
       allUser: [],
       allLeave: [],
-      allAppliedLeave: []
+      allAppliedLeave: [],
+      activeId: undefined
     }
     this.setState(initialState, 'INIT_STATE');
   }
@@ -37,5 +39,8 @@ export class LeaveManagerStateService extends ObservableStore<LeaveManagerStoreS
   }
   updateAllAppliedLeaveState(allAppliedLeave?: AppliedLeave[]): void {
     this.setState({allAppliedLeave: allAppliedLeave}, 'UPDATE_ALL_USER_APPLIED_LEAVE');
+  }
+  updateId(id: number): void {
+    this.setState({activeId: id}, 'UPDATE_ACTIVE_USER_ID')
   }
 }
