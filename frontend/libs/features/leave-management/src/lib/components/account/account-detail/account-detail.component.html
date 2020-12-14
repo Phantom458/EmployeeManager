@@ -57,6 +57,7 @@
           style="cursor: pointer;"
           (click)="onEdit()">Edit Account</a></li>
         <li><a
+          *ngIf="!admin"
           style="cursor: pointer;"
           (click)="onDelete()">Remove Account</a></li>
       </ul>

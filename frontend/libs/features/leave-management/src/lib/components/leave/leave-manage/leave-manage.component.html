@@ -23,7 +23,6 @@
         <p>Number of Days: {{ activeUserAppliedLeave?.daysApplied }} Days</p>
         <p *ngIf="activeUserAppliedLeave?.interim">Interim Mentioned: {{ activeUserAppliedLeave.interim }}</p>
         <p>Status: {{ messageStatus }}</p>
-        |
         <button
           *ngIf="messageStatus === 'Pending'"
           (click)="onApprove()"
@@ -49,7 +48,6 @@
           class="btn btn-success"
           type="button">Completed
         </button>
-        |
       </li>
     </ul>
   </div>

@@ -18,6 +18,8 @@ export class AccountDetailComponent implements OnInit {
   targetUser: User;
   targetLeave: Leave;
   targetAppliedLeave: AppliedLeave;
+  allUser: User[];
+  allLeave: Leave[];
   allAppliedLeave: AppliedLeave[];
   adminMessage: string;
   id: number;
@@ -47,7 +49,9 @@ export class AccountDetailComponent implements OnInit {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
+        this.allUser = data.allUser;
         this.targetUser = data.allUser?.find(user => this.id === user.id);
+        this.allLeave = data.allLeave;
         this.targetLeave = data.allLeave?.find(leave => this.id === leave.id);
         this.allAppliedLeave = data.allAppliedLeave;
         this.targetAppliedLeave = data.allAppliedLeave?.find(appliedLeave => this.id === appliedLeave.id);
@@ -63,7 +67,16 @@ export class AccountDetailComponent implements OnInit {
       this.routes.navigate(['../edit'], {relativeTo: this.route});
     }
   }
+  removeUserFromState() {
+    this.allUser.splice(this.allUser.findIndex(getUser => this.targetUser === getUser), 1);
+    this.allLeave.splice(this.allLeave.findIndex(getLeave => this.targetLeave === getLeave), 1);
+    this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(appliedLeave => this.targetAppliedLeave === appliedLeave), 1);
+    this.facadeService.updateUserState(this.allUser);
+    this.facadeService.updateLeaveState(this.allLeave);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+  }
   onDelete() {
+    this.removeUserFromState();
     this.facadeService.deleteAccount(this.id);
     this.adminMessage = 'Account has been successfully removed';
   }
@@ -76,8 +89,14 @@ export class AccountDetailComponent implements OnInit {
   }
 
   onHandleAdminMessage() {
+    if(this.admin) {
+      this.adminMessage = null;
+      this.routes.navigate(['../../list'], { relativeTo: this.route })
+    }
+    else{
       this.removeMessage();
       this.facadeService?.updateMessage(this.allAppliedLeave);
       this.adminMessage = null;
+    }
   }
 }
