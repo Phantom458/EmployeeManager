@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -34,7 +34,7 @@ export class StatusEditComponent implements OnInit {
     this.initForm();
     this.initStateData();
   }
-  initId() {
+  initId(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -42,12 +42,12 @@ export class StatusEditComponent implements OnInit {
         }
       )
   }
-  initForm() {
+  initForm(): void {
     this.statusUpdateForm = this.formBuilder.group({
       status: ['', Validators.required]
     });
   }
-  initStateData() {
+  initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
@@ -57,7 +57,7 @@ export class StatusEditComponent implements OnInit {
     ).subscribe();
   }
 
-  onUpdate() {
+  onUpdate(): void {
     this.submitted = true;
     this.userData.splice(this.userData.findIndex(getUser => getUser.email === this.currentUser.email), 1, {
     ...this.currentUser, ...this.statusUpdateForm.value})
@@ -66,15 +66,15 @@ export class StatusEditComponent implements OnInit {
     this.facadeService.updateAccount(this.statusUpdateForm.value, this.id)
     this.formMessage = 'Status successfully updated';
   }
-  onBack() {
+  onBack(): void {
     this.routes.navigate(['../../detail'], {relativeTo: this.route})
   }
-  onHandleError() {
+  onHandleError(): void {
     this.formMessage = null;
     this.routes.navigate(['../../detail'], {relativeTo: this.route})
   }
 
-  get status() {
+  get status(): AbstractControl {
     return this.statusUpdateForm.get('status');
   }
 }

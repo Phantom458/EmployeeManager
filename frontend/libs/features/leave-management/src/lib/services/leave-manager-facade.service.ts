@@ -52,7 +52,7 @@ export class LeaveManagerFacadeService {
   addAccount(account: User): void {
     this.apiService.addAccount(account, this.defaultLeaveData, this.defaultAppliedLeaveData);
   }
-  updateAccount(userData: User, id: number) {
+  updateAccount(userData: User, id: number): void {
     this.apiService.updateAccount(userData, id);
   }
   deleteAccount(id: number): void {
@@ -76,7 +76,7 @@ export class LeaveManagerFacadeService {
       }, error => error)
     );
   }
-  applyLeave(leaveData: AppliedLeave, id: number) {
+  applyLeave(leaveData: AppliedLeave, id: number): void {
     this.apiService.applyLeave(leaveData, id);
   }
   calculateDays(leaveData: AppliedLeave): number {
@@ -84,19 +84,19 @@ export class LeaveManagerFacadeService {
     const end = new Date(leaveData.endDate);
     return ((end.getTime() - start.getTime())/(1000*3600*24));
   }
-  resetLeave(id: number) {
+  resetLeave(id: number): void {
     this.apiService.updateAppliedLeave({ ...this.defaultAppliedLeaveData, adminMessage: '' }, id);
   }
-  updateLeave(leaveData: Leave, id: number) {
+  updateLeave(leaveData: Leave, id: number): void {
     this.apiService.acceptLeave(leaveData, id);
   }
   updateLeaveTypeDays(activeUserLeave: Leave, userAppliedLeave: AppliedLeave): LeaveType {
     return this.blService.updateLeaveTypeDays(activeUserLeave, userAppliedLeave);
   }
-  updateAppliedLeaveInfo(appliedLeaveInfo: {}, id: number) {
+  updateAppliedLeaveInfo(appliedLeaveInfo: {}, id: number): void {
     this.apiService.updateAppliedLeaveInfo(appliedLeaveInfo, id);
   }
-  updateMessage(appliedLeave: AppliedLeave[]) {
+  updateMessage(appliedLeave: AppliedLeave[]): void {
     this.stateService.updateAllAppliedLeaveState(appliedLeave);
   }
 
@@ -107,7 +107,7 @@ export class LeaveManagerFacadeService {
   stateChanged(): Observable<LeaveManagerStoreState> {
     return this.stateService.stateChanged;
   }
-  storeAllDataToState(id: number) {
+  storeAllDataToState(id: number): void {
     this.apiService.getAllAccounts().subscribe(
       responseData => this.stateService.updateAllUserState(responseData)
     );
@@ -130,7 +130,7 @@ export class LeaveManagerFacadeService {
   }
 
   //***JWT Authentication***
-  loginUser(userData) {
+  loginUser(userData): void {
     this.apiService.login(userData).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
@@ -139,7 +139,7 @@ export class LeaveManagerFacadeService {
       .subscribe();
     this.updateAuth();
   }
-  updateAuth() {
+  updateAuth(): void {
     setTimeout(() => {
       if(this.isAdmin()) {
         this.loggedIn$.next(this.loggedIn = true);

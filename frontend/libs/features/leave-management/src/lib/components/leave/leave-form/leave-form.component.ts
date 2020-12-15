@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DateValidators } from '../../../misc/validators/date.validator';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
@@ -34,7 +34,7 @@ export class LeaveFormComponent implements OnInit {
        this.initForm();
        this.initStateData();
   }
-  initId() {
+  initId(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -42,7 +42,7 @@ export class LeaveFormComponent implements OnInit {
         }
       )
   }
-  initStateData() {
+  initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
@@ -51,7 +51,7 @@ export class LeaveFormComponent implements OnInit {
       })
     ).subscribe();
   }
-  initForm() {
+  initForm(): void {
     this.leaveForm = this.formBuilder.group({
       type: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
@@ -61,7 +61,7 @@ export class LeaveFormComponent implements OnInit {
         DateValidators.validRange('startDate', 'endDate', { 'loadDate': true })
       ])});
   }
-  changeLeave(e) {
+  changeLeave(e): boolean {
     const {value} = e.target;
     this.selectedLeave = value;
     this.leaveForm.get('type').setValue(e.target.value, {
@@ -70,7 +70,7 @@ export class LeaveFormComponent implements OnInit {
     return true;
   }
 
-  onApply() {
+  onApply(): void {
     const onLeave = this.activeUserAppliedLeave.daysApplied;
     if (onLeave !== 0) {
       this.alertMessage = "You cannot apply for more than one leave.";
@@ -84,14 +84,14 @@ export class LeaveFormComponent implements OnInit {
       this.alertMessage = 'Leave has been applied';
     }
   }
-  onHandleMessage() {
+  onHandleMessage(): void {
     this.alertMessage = null;
     this.onCancel();
   }
-  onCancel() {
+  onCancel(): void {
     this.routes.navigate(['user', this.id, 'detail'])
   }
 
-  get startDate() { return this.leaveForm.get('startDate'); }
-  get endDate() { return this.leaveForm.get('endDate'); }
+  get startDate(): AbstractControl { return this.leaveForm.get('startDate'); }
+  get endDate(): AbstractControl { return this.leaveForm.get('endDate'); }
 }

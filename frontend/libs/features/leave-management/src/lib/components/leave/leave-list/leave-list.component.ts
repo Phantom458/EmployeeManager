@@ -20,7 +20,7 @@ export class LeaveListComponent implements OnInit {
   ngOnInit(): void {
     this.initStateData();
   }
-  initStateData() {
+  initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => this.appliedList = data.allAppliedLeave)

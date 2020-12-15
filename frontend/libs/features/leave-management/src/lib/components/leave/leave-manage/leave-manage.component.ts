@@ -31,7 +31,7 @@ export class LeaveManageComponent implements OnInit {
     this.initData();
     this.initStateData();
   }
-  initData() {
+  initData(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -39,7 +39,7 @@ export class LeaveManageComponent implements OnInit {
         }
       )
   }
-  initStateData() {
+  initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
@@ -53,7 +53,7 @@ export class LeaveManageComponent implements OnInit {
     this.messageStatus = this.activeUserAppliedLeave?.leaveStatus;
   }
 
-  onApprove() {
+  onApprove(): void {
     const userInfo = {leaveStatus: 'Approved', adminMessage: 'Your application has been approved.'}
     this.alterLeaveData();
     this.alterAppliedLeaveData(userInfo);
@@ -63,32 +63,32 @@ export class LeaveManageComponent implements OnInit {
     this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
     this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
-  alterLeaveData() {
+  alterLeaveData(): void {
     const updatedDays = this.facadeService.updateLeaveTypeDays(this.activeUserLeave, this.activeUserAppliedLeave)
     this.activeUserLeave.leave.splice(this.activeUserLeave.leave.findIndex(appliedType => appliedType.type === this.activeUserAppliedLeave.type), 1, updatedDays);
     this.allUserLeave.splice(this.allUserLeave.findIndex(getUser => getUser.id === this.activeUserLeave.id), 1, this.activeUserLeave);
   }
-  alterAppliedLeaveData(info: {}) {
+  alterAppliedLeaveData(info: {}): void {
     this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getLeave => getLeave.id === this.activeUserAppliedLeave.id), 1, {
       ...this.activeUserAppliedLeave, ...info
     });
   }
 
-  onReject() {
+  onReject(): void {
     const userInfo = {leaveStatus: '', adminMessage: 'Your application has been rejected. Please contact admin for details'};
     this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
     this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
     this.onCompleted();
   }
-  onCancel() {
+  onCancel(): void {
     const userInfo = {leaveStatus: '', adminMessage: 'Your application has been cancelled.'};
     this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
     this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
     this.onCompleted();
   }
-  onCompleted() {
+  onCompleted(): void {
     this.facadeService.resetLeave(this.id);
     this.routes.navigate(['../../list'], {relativeTo: this.route});
   }

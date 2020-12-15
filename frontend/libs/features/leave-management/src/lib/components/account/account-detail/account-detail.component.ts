@@ -34,7 +34,7 @@ export class AccountDetailComponent implements OnInit {
     this.initData();
     this.initStateData();
   }
-  initData() {
+  initData(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -60,14 +60,14 @@ export class AccountDetailComponent implements OnInit {
     this.adminMessage = this.targetAppliedLeave?.adminMessage;
   }
 
-  onEdit() {
+  onEdit(): void {
     if (this.facadeService.isAdmin()) {
       this.routes.navigate(['../edit/status'], {relativeTo: this.route});
     } else {
       this.routes.navigate(['../edit'], {relativeTo: this.route});
     }
   }
-  removeUserFromState() {
+  removeUserFromState(): void {
     this.allUser.splice(this.allUser.findIndex(getUser => this.targetUser === getUser), 1);
     this.allLeave.splice(this.allLeave.findIndex(getLeave => this.targetLeave === getLeave), 1);
     this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(appliedLeave => this.targetAppliedLeave === appliedLeave), 1);
@@ -75,20 +75,20 @@ export class AccountDetailComponent implements OnInit {
     this.facadeService.updateLeaveState(this.allLeave);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
   }
-  onDelete() {
+  onDelete(): void {
     this.removeUserFromState();
     this.facadeService.deleteAccount(this.id);
     this.adminMessage = 'Account has been successfully removed';
   }
 
-  removeMessage() {
+  removeMessage(): void {
     this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getUser => getUser.id === this.targetAppliedLeave.id), 1, {
       ...this.targetAppliedLeave, adminMessage: ''
     });
     this.facadeService.resetLeave(this.id);
   }
 
-  onHandleAdminMessage() {
+  onHandleAdminMessage(): void {
     if(this.admin) {
       this.adminMessage = null;
       this.routes.navigate(['../../list'], { relativeTo: this.route })

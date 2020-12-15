@@ -25,7 +25,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.initData();
   }
-  initData() {
+  initData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
@@ -39,7 +39,7 @@ export class NavBarComponent implements OnInit {
     );
   }
 
-  onLogout() {
+  onLogout(): void {
     this.facadeService.logout();
     this.facadeService.removeUser();
     this.routes.navigate(['auth/login']);

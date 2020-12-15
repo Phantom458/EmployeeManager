@@ -21,7 +21,7 @@ export class AccountListComponent implements OnInit {
   ngOnInit(): void {
     this.initStateData();
   }
-  initStateData() {
+  initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => this.users = data.allUser)

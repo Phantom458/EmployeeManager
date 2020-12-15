@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../models/user.model';
 import { LeaveManagerFacadeService } from '../../../services/leave-manager-facade.service';
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.initData();
     this.initForm();
   }
-  initData() {
+  initData(): void {
     this.facadeService.getAllAccounts()
       .subscribe(
         userData => this.userData = userData
@@ -44,14 +44,14 @@ export class LoginComponent implements OnInit {
         userData => this.userAppliedLeave = userData
       );
   }
-  initForm() {
+  initForm(): void {
     this.userLog = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
 
-  onLogin() {
+  onLogin(): void {
     this.facadeService.loginUser(this.userLog.value);
     this.facadeService.isLoggedIn$().pipe(
       delay(2000)
@@ -68,22 +68,22 @@ export class LoginComponent implements OnInit {
     }, 4000);
   }
 
-  onRegister() {
+  onRegister(): void {
     this.routes.navigate(['../register'], {relativeTo: this.route});
   }
 
-  onHandleError() {
+  onHandleError(): void {
     this.errorMessage = null;
     this.userLog.reset();
   }
 
-  get email() {
+  get email(): AbstractControl {
     return this.userLog.get("email");
   }
-  get password() {
+  get password(): AbstractControl {
     return this.userLog.get("password");
   }
-  get activeUser() {
+  get activeUser(): User {
     return this.userData.find(user => user.email === this.email.value);
   }
 }

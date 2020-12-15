@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../../../models/user.model';
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.initialData();
     this.initForm();
   }
-  initialId() {
+  initialId(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
         }
       )
   }
-  initialData() {
+  initialData(): void {
     this.facadeService.isAdmin$().subscribe(
       admin => this.isAdmin = admin
     );
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       this.initStateData();
     }
   }
-  initStateData() {
+  initStateData(): void {
     this.state$ = this.facadeService.stateChanged();
     this.state$.pipe(
       tap(data => {
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
     ).subscribe();
   }
 
-  private initForm() {
+  private initForm(): void {
     this.signUpForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -84,19 +84,19 @@ export class RegisterComponent implements OnInit {
     }, {validators: passwordValidator});
   }
 
-  onRegister(){
+  onRegister(): void {
     if (this.isLoggedIn === false && this.checkDupeEmail(this.email.value)) {
       this.formMessage = 'This email has already been registered. SignIn to continue';
     } else {
       (this.isLoggedIn === true)? this.editSuccess() : this.registerSuccess()
     }
   }
-  private registerSuccess() {
+  private registerSuccess(): void {
     this.submitted = true;
     this.facadeService.addAccount(this.signUpForm.value);
     this.formMessage = 'Registration successful! Please log in to continue';
   }
-  private editSuccess() {
+  private editSuccess(): void {
     this.submitted = true;
     this.signUpForm.get('status').setValue(this.currentUser.status);
     this.userData?.splice(this.userData.findIndex(getUser => getUser.email === this.currentUser.email), 1, {
@@ -106,30 +106,30 @@ export class RegisterComponent implements OnInit {
     this.facadeService.updateAccount(this.signUpForm.value, this.id)
     this.formMessage = 'Your changes have been saved';
   }
-  checkDupeEmail(email: string) {
+  checkDupeEmail(email: string): boolean {
     const dupeEmail = this.userData.find(user => user.email === email);
     if (dupeEmail) {
       return true;
     }
   }
 
-  onSignIn() {
+  onSignIn(): void {
     this.routes.navigate(['../login'], {relativeTo: this.route})
   }
-  onCancel() {
+  onCancel(): void {
     this.routes.navigate(['../detail'], {relativeTo: this.route})
   }
 
-  onHandleError() {
+  onHandleError(): void {
     this.formMessage = null;
     (this.isLoggedIn === true)? this.routes.navigate(['../detail'], {relativeTo: this.route})
       : this.routes.navigate(['auth/login']);
   }
 
-  get status() {
+  get status(): AbstractControl {
     return this.signUpForm.get('status');
   }
-  get email() {
+  get email(): AbstractControl {
     return this.signUpForm.get('email');
   }
 }

@@ -21,23 +21,20 @@ export class LeaveManagerApiService {
   getAllAccounts(): Observable<User[]> {
     return this.http.get<User[]>(this.accountURL)
   }
-  getAccountById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.accountURL}/${id}`).pipe(take(1));
-  }
   addAccount(account: User, leave: Leave, appliedLeave: AppliedLeave): void {
     this.addUser(account);
     this.addLeave(leave);
     this.addAppliedLeave(appliedLeave);
   }
-  addUser(account: User) {
+  addUser(account: User): void {
     this.http.post<User>(this.accountURL, account)
       .subscribe(responseData => {console.log(responseData)});
   }
-  addLeave(leave: Leave) {
+  addLeave(leave: Leave): void {
     this.http.post<Leave>(this.leaveURL, leave)
       .subscribe(responseData => {console.log(responseData)});
   }
-  addAppliedLeave(appliedLeave: AppliedLeave) {
+  addAppliedLeave(appliedLeave: AppliedLeave): void {
     this.http.post<AppliedLeave>(this.appliedURL, appliedLeave)
       .subscribe(responseData => {console.log(responseData)});
   }
@@ -69,19 +66,19 @@ export class LeaveManagerApiService {
         console.log(responseData);
       });
   }
-  acceptLeave(leaveData: {}, id: number) {
+  acceptLeave(leaveData: {}, id: number): void {
     this.http.patch<Leave>(`${this.leaveURL}/${id}`, leaveData)
       .subscribe(responseData => {
         console.log(responseData);
       });
   }
-  updateAppliedLeave(leaveData: AppliedLeave, id: number) {
+  updateAppliedLeave(leaveData: AppliedLeave, id: number): void {
     this.http.patch<AppliedLeave[]>(`${this.appliedURL}/${id}`, leaveData)
       .subscribe(responseData => {
         console.log(responseData);
       });
   }
-  updateAppliedLeaveInfo(leaveInfo: {}, id:number) {
+  updateAppliedLeaveInfo(leaveInfo: {}, id:number): void {
     this.http.patch<{}>(`${this.appliedURL}/${id}`, leaveInfo)
       .subscribe(responseData => {
         console.log(responseData);
