@@ -22,7 +22,7 @@ export class LeaveFormComponent implements OnInit {
   private id: number;
   private selectedLeave: string;
   alertMessage = null;
-  leaveList = ['Casual', 'Sick', 'Maternity', 'Toil'];
+  leaveList = ['casual', 'sick', 'maternity', 'toil'];
 
   constructor(private formBuilder: FormBuilder,
               private facadeService: LeaveManagerFacadeService,
@@ -47,7 +47,7 @@ export class LeaveFormComponent implements OnInit {
     this.state$.pipe(
       tap(data => {
         this.allAppliedLeave = data.allAppliedLeave;
-        this.activeUserAppliedLeave = data.allAppliedLeave?.find(user => this.id === user.id);
+        this.activeUserAppliedLeave = data?.allAppliedLeave.find(user => this.id === user?.id);
       })
     ).subscribe();
   }
@@ -77,7 +77,7 @@ export class LeaveFormComponent implements OnInit {
     } else {
       this.submitted = true;
       const daysApplied = this.facadeService.calculateDays(this.leaveForm.value);
-      const applyLeave = { ...this.leaveForm.value, id: this.id, daysApplied: daysApplied };
+      const applyLeave = { ...this.leaveForm.value, id: this.id, daysApplied: daysApplied, leaveStatus: 'Pending' };
       this.allAppliedLeave?.splice(this.allAppliedLeave.findIndex(getUser => getUser.id === this.activeUserAppliedLeave.id), 1, applyLeave);
       this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
       this.facadeService.applyLeave(applyLeave, this.id);

@@ -60,7 +60,7 @@ export class LeaveManageComponent implements OnInit {
     this.facadeService.updateLeaveState(this.allUserLeave);
     this.facadeService.updateLeave(this.activeUserLeave, this.id);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
-    this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
     this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
   alterLeaveData(): void {
@@ -78,14 +78,14 @@ export class LeaveManageComponent implements OnInit {
     const userInfo = {leaveStatus: '', adminMessage: 'Your application has been rejected. Please contact admin for details'};
     this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
-    this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
     this.onCompleted();
   }
   onCancel(): void {
     const userInfo = {leaveStatus: '', adminMessage: 'Your application has been cancelled.'};
     this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
-    this.facadeService.updateAppliedLeaveInfo(userInfo, this.id);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
     this.onCompleted();
   }
   onCompleted(): void {

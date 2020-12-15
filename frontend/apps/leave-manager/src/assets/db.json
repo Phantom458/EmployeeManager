@@ -39,7 +39,7 @@
       "phone": "123123123",
       "password": "newguy",
       "confirmPassword": "newguy",
-      "status": "At Work",
+      "status": "Inactive",
       "id": 5
     }
   ],
@@ -48,25 +48,25 @@
       "id": 1,
       "leave": [
         {
-          "type": "casual",
+          "type": "Casual",
           "numberOfDays": 30,
           "leaveLeft": 30,
           "leaveTaken": 0
         },
         {
-          "type": "sick",
+          "type": "Sick",
           "numberOfDays": 60,
           "leaveLeft": 60,
           "leaveTaken": 0
         },
         {
-          "type": "maternity",
+          "type": "Maternity",
           "numberOfDays": 180,
           "leaveLeft": 180,
           "leaveTaken": 0
         },
         {
-          "type": "toil",
+          "type": "Toil",
           "numberOfDays": 50,
           "leaveLeft": 50,
           "leaveTaken": 0
@@ -77,53 +77,53 @@
       "id": 3,
       "leave": [
         {
-          "type": "casual",
+          "type": "Casual",
           "numberOfDays": 30,
           "leaveLeft": 15,
           "leaveTaken": 15
         },
         {
-          "type": "sick",
+          "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 33,
-          "leaveTaken": 27
+          "leaveLeft": 26,
+          "leaveTaken": 34
         },
         {
-          "type": "maternity",
+          "type": "Maternity",
           "numberOfDays": 180,
           "leaveLeft": 0,
           "leaveTaken": 180
         },
         {
-          "type": "toil",
+          "type": "Toil",
           "numberOfDays": 50,
-          "leaveLeft": 20,
-          "leaveTaken": 30
+          "leaveLeft": 37,
+          "leaveTaken": 13
         }
       ]
     },
     {
       "leave": [
         {
-          "type": "casual",
+          "type": "Casual",
           "numberOfDays": 30,
           "leaveLeft": 20,
           "leaveTaken": 10
         },
         {
-          "type": "sick",
+          "type": "Sick",
           "numberOfDays": 60,
           "leaveLeft": 60,
           "leaveTaken": 0
         },
         {
-          "type": "maternity",
+          "type": "Maternity",
           "numberOfDays": 180,
           "leaveLeft": 180,
           "leaveTaken": 0
         },
         {
-          "type": "toil",
+          "type": "Toil",
           "numberOfDays": 50,
           "leaveLeft": 50,
           "leaveTaken": 0
@@ -134,25 +134,25 @@
     {
       "leave": [
         {
-          "type": "casual",
+          "type": "Casual",
           "numberOfDays": 30,
           "leaveLeft": 30,
           "leaveTaken": 0
         },
         {
-          "type": "sick",
+          "type": "Sick",
           "numberOfDays": 60,
           "leaveLeft": 60,
           "leaveTaken": 0
         },
         {
-          "type": "maternity",
+          "type": "Maternity",
           "numberOfDays": 180,
           "leaveLeft": 180,
           "leaveTaken": 0
         },
         {
-          "type": "toil",
+          "type": "Toil",
           "numberOfDays": 50,
           "leaveLeft": 50,
           "leaveTaken": 0
@@ -171,13 +171,13 @@
     },
     {
       "id": 3,
-      "type": "sick",
-      "startDate": "2020-11-30",
-      "endDate": "2020-12-12",
-      "daysApplied": 12,
-      "interim": "Alu Dorji",
-      "adminMessage": "Your leave has been approved.",
-      "leaveStatus": "Approved"
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
+      "interim": "",
+      "adminMessage": "",
+      "leaveStatus": ""
     },
     {
       "id": 4,
@@ -185,10 +185,9 @@
       "startDate": "",
       "endDate": "",
       "daysApplied": 0,
-      "leaveStatus": "Approved",
+      "leaveStatus": "",
       "adminMessage": "",
-      "interim": "",
-      "leaveState": ""
+      "interim": ""
     },
     {
       "type": "",

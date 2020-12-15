@@ -17,7 +17,7 @@
           <option>Choose the type of leave</option>
           <option
             *ngFor="let type of leaveList"
-          >{{ type }}</option>
+          >{{ type | titlecase }}</option>
         </select>
       </div>
     </div>

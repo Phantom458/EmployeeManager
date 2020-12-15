@@ -17,7 +17,7 @@ export class LeaveManagerFacadeService {
       {"type": "maternity", "numberOfDays": 180, "leaveLeft": 180, "leaveTaken": 0},
       {"type": "toil", "numberOfDays": 50, "leaveLeft": 50, "leaveTaken": 0}]};
   private defaultAppliedLeaveData = {"type": "", "startDate": "", "endDate": "", "daysApplied": 0,
-    "interim": "", "leaveState": ""};
+    "interim": "", "leaveStatus": ""};
 
   private admin = false;
   private admin$ = new BehaviorSubject<boolean>(this.admin);
@@ -93,8 +93,8 @@ export class LeaveManagerFacadeService {
   updateLeaveTypeDays(activeUserLeave: Leave, userAppliedLeave: AppliedLeave): LeaveType {
     return this.blService.updateLeaveTypeDays(activeUserLeave, userAppliedLeave);
   }
-  updateAppliedLeaveInfo(appliedLeaveInfo: {}, id: number): void {
-    this.apiService.updateAppliedLeaveInfo(appliedLeaveInfo, id);
+  updateAppliedLeaveInfo(appliedLeave: AppliedLeave, id: number): void {
+    this.apiService.updateAppliedLeaveInfo(appliedLeave, id);
   }
   updateMessage(appliedLeave: AppliedLeave[]): void {
     this.stateService.updateAllAppliedLeaveState(appliedLeave);

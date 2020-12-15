@@ -95,7 +95,7 @@ export class AccountDetailComponent implements OnInit {
     }
     else{
       this.removeMessage();
-      this.facadeService?.updateMessage(this.allAppliedLeave);
+      this.facadeService.updateMessage(this.allAppliedLeave);
       this.adminMessage = null;
     }
   }
