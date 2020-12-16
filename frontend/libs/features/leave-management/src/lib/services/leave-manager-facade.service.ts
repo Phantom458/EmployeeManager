@@ -128,6 +128,9 @@ export class LeaveManagerFacadeService {
   updateAppliedLeaveState(leaveData: AppliedLeave[]): void {
     this.stateService.updateAllAppliedLeaveState(leaveData);
   }
+  getDefaultAppliedLeave(): AppliedLeave {
+    return this.defaultAppliedLeaveData;
+  }
 
   //***JWT Authentication***
   loginUser(userData): void {

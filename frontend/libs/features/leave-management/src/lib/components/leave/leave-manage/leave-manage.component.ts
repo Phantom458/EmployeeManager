@@ -54,14 +54,12 @@ export class LeaveManageComponent implements OnInit {
   }
 
   onApprove(): void {
-    const userInfo = {leaveStatus: 'Approved', adminMessage: 'Your application has been approved.'}
+    const userInfo = {leaveStatus: 'Approved', adminMessage: 'Your application has been approved.' , id:this.id}
     this.alterLeaveData();
     this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateLeaveState(this.allUserLeave);
     this.facadeService.updateLeave(this.activeUserLeave, this.id);
-    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
-    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
-    this.routes.navigate(['../../list'], {relativeTo: this.route});
+    this.updateAppliedLeave(userInfo);
   }
   alterLeaveData(): void {
     const updatedDays = this.facadeService.updateLeaveTypeDays(this.activeUserLeave, this.activeUserAppliedLeave)
@@ -75,21 +73,28 @@ export class LeaveManageComponent implements OnInit {
   }
 
   onReject(): void {
-    const userInfo = {leaveStatus: '', adminMessage: 'Your application has been rejected. Please contact admin for details'};
-    this.alterAppliedLeaveData(userInfo);
-    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
-    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
-    this.onCompleted();
+    const userInfo = {leaveStatus: '', adminMessage: 'Your application has been rejected. Please contact admin for details', id: this.id};
+    this.eraseAppliedLeaveState(userInfo);
+    this.updateAppliedLeave(userInfo);
   }
   onCancel(): void {
-    const userInfo = {leaveStatus: '', adminMessage: 'Your application has been cancelled.'};
-    this.alterAppliedLeaveData(userInfo);
-    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
-    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
-    this.onCompleted();
+    const userInfo = {leaveStatus: '', adminMessage: 'Your application has been cancelled.', id: this.id};
+    this.eraseAppliedLeaveState(userInfo);
+    this.updateAppliedLeave(userInfo);
   }
   onCompleted(): void {
-    this.facadeService.resetLeave(this.id);
+    const userInfo = {leaveStatus: '', adminMessage: 'Welcome back', id:this.id};
+    this.eraseAppliedLeaveState(userInfo);
+    this.updateAppliedLeave(userInfo);
+  }
+  eraseAppliedLeaveState(info: {}): void {
+    const defaultAppliedLeave = this.facadeService.getDefaultAppliedLeave();
+    this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getLeave => getLeave.id === this.activeUserAppliedLeave.id), 1, {
+      ...defaultAppliedLeave, ...info});
+  }
+  updateAppliedLeave(userInfo: {}): void {
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
     this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
 }

@@ -85,8 +85,8 @@
         {
           "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 26,
-          "leaveTaken": 34
+          "leaveLeft": 25,
+          "leaveTaken": 35
         },
         {
           "type": "Maternity",
@@ -113,8 +113,8 @@
         {
           "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 60,
-          "leaveTaken": 0
+          "leaveLeft": 46,
+          "leaveTaken": 14
         },
         {
           "type": "Maternity",
@@ -125,8 +125,8 @@
         {
           "type": "Toil",
           "numberOfDays": 50,
-          "leaveLeft": 50,
-          "leaveTaken": 0
+          "leaveLeft": 49,
+          "leaveTaken": 1
         }
       ],
       "id": 4
