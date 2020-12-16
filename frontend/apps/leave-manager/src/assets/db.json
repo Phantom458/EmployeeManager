@@ -19,7 +19,7 @@
       "phone": "+97577487759",
       "password": "iamnoone",
       "confirmPassword": "iamnoone",
-      "status": "Inactive",
+      "status": "On Leave",
       "role": "user"
     },
     {
@@ -89,19 +89,19 @@
         {
           "type": "Casual",
           "numberOfDays": 30,
-          "leaveLeft": 13,
-          "leaveTaken": 17
+          "leaveLeft": 12,
+          "leaveTaken": 18
         },
         {
           "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 21,
-          "leaveTaken": 39
+          "leaveLeft": 19,
+          "leaveTaken": 41
         },
         {
           "type": "Maternity",
           "numberOfDays": 180,
-          "leaveLeft": 0,
+          "leaveLeft": 40,
           "leaveTaken": 180
         },
         {
@@ -117,14 +117,14 @@
         {
           "type": "Casual",
           "numberOfDays": 30,
-          "leaveLeft": 11,
-          "leaveTaken": 19
+          "leaveLeft": 7,
+          "leaveTaken": 30
         },
         {
           "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 0,
-          "leaveTaken": 60
+          "leaveLeft": 30,
+          "leaveTaken": 61
         },
         {
           "type": "Maternity",
@@ -220,13 +220,13 @@
     },
     {
       "id": 4,
-      "type": "",
-      "startDate": "",
-      "endDate": "",
-      "daysApplied": 0,
+      "type": "Casual",
+      "startDate": "2020-12-17",
+      "endDate": "2020-12-18",
+      "daysApplied": 1,
       "interim": "",
-      "leaveStatus": "",
-      "adminMessage": "Your application has been rejected. Please contact admin for details"
+      "leaveStatus": "Approved",
+      "adminMessage": "Your application has been approved."
     },
     {
       "type": "",

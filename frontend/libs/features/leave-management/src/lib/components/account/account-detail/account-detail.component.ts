@@ -85,7 +85,6 @@ export class AccountDetailComponent implements OnInit {
     this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getUser => getUser.id === this.targetAppliedLeave.id), 1, {
       ...this.targetAppliedLeave, adminMessage: ''
     });
-    this.facadeService.resetLeave(this.id);
   }
 
   onHandleAdminMessage(): void {
@@ -93,9 +92,13 @@ export class AccountDetailComponent implements OnInit {
       this.adminMessage = null;
       this.routes.navigate(['../../list'], { relativeTo: this.route })
     }
-    else{
+    else if(this.targetAppliedLeave.daysApplied !== 0){
       this.removeMessage();
       this.facadeService.updateMessage(this.allAppliedLeave);
+      this.adminMessage = null;
+    }
+    else{
+      this.facadeService.resetLeave(this.id);
       this.adminMessage = null;
     }
   }
