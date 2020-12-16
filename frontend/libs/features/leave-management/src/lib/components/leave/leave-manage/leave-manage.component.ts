@@ -54,9 +54,8 @@ export class LeaveManageComponent implements OnInit {
   }
 
   onApprove(): void {
-    const userInfo = {leaveStatus: 'Approved', adminMessage: 'Your application has been approved.' , id:this.id}
+    const userInfo = {leaveStatus: 'Approved', adminMessage: 'Your application has been approved.'}
     this.alterLeaveData();
-    this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateLeaveState(this.allUserLeave);
     this.facadeService.updateLeave(this.activeUserLeave, this.id);
     this.updateAppliedLeave(userInfo);
@@ -68,24 +67,29 @@ export class LeaveManageComponent implements OnInit {
   }
   alterAppliedLeaveData(info: {}): void {
     this.allAppliedLeave.splice(this.allAppliedLeave.findIndex(getLeave => getLeave.id === this.activeUserAppliedLeave.id), 1, {
-      ...this.activeUserAppliedLeave, ...info
-    });
+      ...this.activeUserAppliedLeave, ...info });
   }
 
   onReject(): void {
     const userInfo = {leaveStatus: '', adminMessage: 'Your application has been rejected. Please contact admin for details', id: this.id};
     this.eraseAppliedLeaveState(userInfo);
-    this.updateAppliedLeave(userInfo);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
+    this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
   onCancel(): void {
     const userInfo = {leaveStatus: '', adminMessage: 'Your application has been cancelled.', id: this.id};
     this.eraseAppliedLeaveState(userInfo);
-    this.updateAppliedLeave(userInfo);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
+    this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
   onCompleted(): void {
     const userInfo = {leaveStatus: '', adminMessage: 'Welcome back', id:this.id};
     this.eraseAppliedLeaveState(userInfo);
-    this.updateAppliedLeave(userInfo);
+    this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
+    this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
+    this.routes.navigate(['../../list'], {relativeTo: this.route});
   }
   eraseAppliedLeaveState(info: {}): void {
     const defaultAppliedLeave = this.facadeService.getDefaultAppliedLeave();
@@ -93,6 +97,7 @@ export class LeaveManageComponent implements OnInit {
       ...defaultAppliedLeave, ...info});
   }
   updateAppliedLeave(userInfo: {}): void {
+    this.alterAppliedLeaveData(userInfo);
     this.facadeService.updateAppliedLeaveState(this.allAppliedLeave);
     this.facadeService.updateAppliedLeaveInfo({ ...this.activeUserAppliedLeave, ...userInfo }, this.id);
     this.routes.navigate(['../../list'], {relativeTo: this.route});

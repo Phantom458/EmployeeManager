@@ -27,21 +27,20 @@
           *ngIf="messageStatus === 'Pending'"
           (click)="onApprove()"
           class="btn btn-success"
-          type="button">Approve
+          type="button">Approve |
         </button>
-        |
         <button
+          *ngIf="messageStatus === 'Pending'"
           (click)="onReject()"
           class="btn btn-danger"
-          type="button">Reject
+          type="button">Reject |
         </button>
-        |
         <button
+          *ngIf="messageStatus === 'Pending'"
           (click)="onCancel()"
           class="btn btn-primary"
-          type="button">Cancel
+          type="button">Cancel |
         </button>
-        |
         <button
           *ngIf="messageStatus === 'Approved'"
           (click)="onCompleted()"

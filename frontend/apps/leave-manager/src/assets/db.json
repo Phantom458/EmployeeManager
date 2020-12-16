@@ -39,8 +39,18 @@
       "phone": "123123123",
       "password": "newguy",
       "confirmPassword": "newguy",
-      "status": "Inactive",
+      "status": "At Work",
       "id": 5
+    },
+    {
+      "firstName": "xx",
+      "lastName": "aas",
+      "email": "jadbjas@kjbaksd.conn",
+      "phone": "123123",
+      "password": "222222",
+      "confirmPassword": "222222",
+      "status": "On Leave",
+      "id": 6
     }
   ],
   "Leaves": [
@@ -79,14 +89,14 @@
         {
           "type": "Casual",
           "numberOfDays": 30,
-          "leaveLeft": 15,
-          "leaveTaken": 15
+          "leaveLeft": 13,
+          "leaveTaken": 17
         },
         {
           "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 25,
-          "leaveTaken": 35
+          "leaveLeft": 21,
+          "leaveTaken": 39
         },
         {
           "type": "Maternity",
@@ -97,8 +107,8 @@
         {
           "type": "Toil",
           "numberOfDays": 50,
-          "leaveLeft": 37,
-          "leaveTaken": 13
+          "leaveLeft": 34,
+          "leaveTaken": 16
         }
       ]
     },
@@ -107,20 +117,20 @@
         {
           "type": "Casual",
           "numberOfDays": 30,
-          "leaveLeft": 20,
-          "leaveTaken": 10
+          "leaveLeft": 11,
+          "leaveTaken": 19
         },
         {
           "type": "Sick",
           "numberOfDays": 60,
-          "leaveLeft": 46,
-          "leaveTaken": 14
+          "leaveLeft": 0,
+          "leaveTaken": 60
         },
         {
           "type": "Maternity",
           "numberOfDays": 180,
-          "leaveLeft": 180,
-          "leaveTaken": 0
+          "leaveLeft": 179,
+          "leaveTaken": 1
         },
         {
           "type": "Toil",
@@ -159,6 +169,35 @@
         }
       ],
       "id": 5
+    },
+    {
+      "leave": [
+        {
+          "type": "casual",
+          "numberOfDays": 30,
+          "leaveLeft": 30,
+          "leaveTaken": 0
+        },
+        {
+          "type": "sick",
+          "numberOfDays": 60,
+          "leaveLeft": 60,
+          "leaveTaken": 0
+        },
+        {
+          "type": "maternity",
+          "numberOfDays": 180,
+          "leaveLeft": 180,
+          "leaveTaken": 0
+        },
+        {
+          "type": "toil",
+          "numberOfDays": 50,
+          "leaveLeft": 50,
+          "leaveTaken": 0
+        }
+      ],
+      "id": 6
     }
   ],
   "Applied": [
@@ -171,13 +210,13 @@
     },
     {
       "id": 3,
-      "type": "",
-      "startDate": "",
-      "endDate": "",
-      "daysApplied": 0,
+      "type": "Casual",
+      "startDate": "2020-12-17",
+      "endDate": "2020-12-18",
+      "daysApplied": 1,
       "interim": "",
-      "adminMessage": "",
-      "leaveStatus": ""
+      "leaveStatus": "Approved",
+      "adminMessage": "Your application has been approved."
     },
     {
       "id": 4,
@@ -185,9 +224,9 @@
       "startDate": "",
       "endDate": "",
       "daysApplied": 0,
+      "interim": "",
       "leaveStatus": "",
-      "adminMessage": "",
-      "interim": ""
+      "adminMessage": "Your application has been rejected. Please contact admin for details"
     },
     {
       "type": "",
@@ -195,6 +234,15 @@
       "endDate": "",
       "daysApplied": 0,
       "id": 5
+    },
+    {
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
+      "interim": "",
+      "leaveStatus": "",
+      "id": 6
     }
   ]
 }
