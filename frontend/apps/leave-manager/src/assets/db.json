@@ -23,16 +23,6 @@
       "role": "user"
     },
     {
-      "firstName": "Test",
-      "lastName": "Test69420",
-      "email": "test@test.com",
-      "phone": "17491632",
-      "password": "123123",
-      "confirmPassword": "123123",
-      "status": "On Leave",
-      "id": 4
-    },
-    {
       "firstName": "New",
       "lastName": "Account",
       "email": "newaccount@gmail.com",
@@ -49,8 +39,28 @@
       "phone": "123123",
       "password": "222222",
       "confirmPassword": "222222",
-      "status": "On Leave",
+      "status": "At Work",
       "id": 6
+    },
+    {
+      "firstName": "Test",
+      "lastName": "Test",
+      "email": "test@test.com",
+      "phone": "123123123",
+      "password": "123123",
+      "confirmPassword": "123123",
+      "status": "Inactive",
+      "id": 7
+    },
+    {
+      "firstName": "qwe",
+      "lastName": "qwe",
+      "email": "qwe@qwe.qwe",
+      "phone": "123123",
+      "password": "qweqwe",
+      "confirmPassword": "qweqwe",
+      "status": "At Work",
+      "id": 8
     }
   ],
   "Leaves": [
@@ -58,25 +68,25 @@
       "id": 1,
       "leave": [
         {
-          "type": "Casual",
+          "type": "casual",
           "numberOfDays": 30,
           "leaveLeft": 30,
           "leaveTaken": 0
         },
         {
-          "type": "Sick",
+          "type": "sick",
           "numberOfDays": 60,
           "leaveLeft": 60,
           "leaveTaken": 0
         },
         {
-          "type": "Maternity",
+          "type": "maternity",
           "numberOfDays": 180,
           "leaveLeft": 180,
           "leaveTaken": 0
         },
         {
-          "type": "Toil",
+          "type": "toil",
           "numberOfDays": 50,
           "leaveLeft": 50,
           "leaveTaken": 0
@@ -87,82 +97,53 @@
       "id": 3,
       "leave": [
         {
-          "type": "Casual",
+          "type": "casual",
           "numberOfDays": 30,
           "leaveLeft": 12,
           "leaveTaken": 18
         },
         {
-          "type": "Sick",
+          "type": "sick",
           "numberOfDays": 60,
           "leaveLeft": 19,
           "leaveTaken": 41
         },
         {
-          "type": "Maternity",
+          "type": "maternity",
           "numberOfDays": 180,
           "leaveLeft": 40,
           "leaveTaken": 180
         },
         {
-          "type": "Toil",
+          "type": "toil",
           "numberOfDays": 50,
-          "leaveLeft": 34,
-          "leaveTaken": 16
+          "leaveLeft": 50,
+          "leaveTaken": 0
         }
       ]
     },
     {
       "leave": [
         {
-          "type": "Casual",
-          "numberOfDays": 30,
-          "leaveLeft": 7,
-          "leaveTaken": 30
-        },
-        {
-          "type": "Sick",
-          "numberOfDays": 60,
-          "leaveLeft": 30,
-          "leaveTaken": 61
-        },
-        {
-          "type": "Maternity",
-          "numberOfDays": 180,
-          "leaveLeft": 179,
-          "leaveTaken": 1
-        },
-        {
-          "type": "Toil",
-          "numberOfDays": 50,
-          "leaveLeft": 49,
-          "leaveTaken": 1
-        }
-      ],
-      "id": 4
-    },
-    {
-      "leave": [
-        {
-          "type": "Casual",
+          "type": "casual",
           "numberOfDays": 30,
           "leaveLeft": 30,
           "leaveTaken": 0
         },
         {
-          "type": "Sick",
+          "type": "sick",
           "numberOfDays": 60,
           "leaveLeft": 60,
           "leaveTaken": 0
         },
         {
-          "type": "Maternity",
+          "type": "maternity",
           "numberOfDays": 180,
           "leaveLeft": 180,
           "leaveTaken": 0
         },
         {
-          "type": "Toil",
+          "type": "toil",
           "numberOfDays": 50,
           "leaveLeft": 50,
           "leaveTaken": 0
@@ -198,6 +179,64 @@
         }
       ],
       "id": 6
+    },
+    {
+      "leave": [
+        {
+          "type": "casual",
+          "numberOfDays": 30,
+          "leaveLeft": 23,
+          "leaveTaken": 7
+        },
+        {
+          "type": "sick",
+          "numberOfDays": 60,
+          "leaveLeft": 60,
+          "leaveTaken": 0
+        },
+        {
+          "type": "maternity",
+          "numberOfDays": 180,
+          "leaveLeft": 180,
+          "leaveTaken": 0
+        },
+        {
+          "type": "toil",
+          "numberOfDays": 50,
+          "leaveLeft": 34,
+          "leaveTaken": 16
+        }
+      ],
+      "id": 7
+    },
+    {
+      "leave": [
+        {
+          "type": "casual",
+          "numberOfDays": 30,
+          "leaveLeft": 30,
+          "leaveTaken": 0
+        },
+        {
+          "type": "sick",
+          "numberOfDays": 60,
+          "leaveLeft": 60,
+          "leaveTaken": 0
+        },
+        {
+          "type": "maternity",
+          "numberOfDays": 180,
+          "leaveLeft": 180,
+          "leaveTaken": 0
+        },
+        {
+          "type": "toil",
+          "numberOfDays": 50,
+          "leaveLeft": 50,
+          "leaveTaken": 0
+        }
+      ],
+      "id": 8
     }
   ],
   "Applied": [
@@ -210,23 +249,13 @@
     },
     {
       "id": 3,
-      "type": "Casual",
-      "startDate": "2020-12-17",
-      "endDate": "2020-12-18",
-      "daysApplied": 1,
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
       "interim": "",
-      "leaveStatus": "Approved",
-      "adminMessage": "Your application has been approved."
-    },
-    {
-      "id": 4,
-      "type": "Casual",
-      "startDate": "2020-12-17",
-      "endDate": "2020-12-18",
-      "daysApplied": 1,
-      "interim": "",
-      "leaveStatus": "Approved",
-      "adminMessage": "Your application has been approved."
+      "leaveStatus": "",
+      "adminMessage": "Welcome back"
     },
     {
       "type": "",
@@ -243,6 +272,25 @@
       "interim": "",
       "leaveStatus": "",
       "id": 6
+    },
+    {
+      "type": "casual",
+      "startDate": "2020-12-19",
+      "endDate": "2020-12-26",
+      "daysApplied": 7,
+      "interim": "John Dophu",
+      "leaveStatus": "Approved",
+      "id": 7,
+      "adminMessage": "Your application has been approved."
+    },
+    {
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
+      "interim": "",
+      "leaveStatus": "",
+      "id": 8
     }
   ]
 }

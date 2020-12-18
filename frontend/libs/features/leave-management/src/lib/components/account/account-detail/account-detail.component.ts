@@ -79,6 +79,7 @@ export class AccountDetailComponent implements OnInit {
     this.removeUserFromState();
     this.facadeService.deleteAccount(this.id);
     this.adminMessage = 'Account has been successfully removed';
+    this.routes.navigate(['auth/login'])
   }
 
   removeMessage(): void {

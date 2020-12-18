@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
     <frontend-alert
-      *ngIf="adminMessage"
+      *ngIf="adminMessage && !admin"
       [message]="adminMessage"
       (close)="onHandleAdminMessage()">
     </frontend-alert>
@@ -34,7 +34,6 @@
         <td>{{num.leaveTaken}}</td>
       </tr>
     </table>
-    <small>{{ adminMessage }}</small>
   </div>
 </div>
 
