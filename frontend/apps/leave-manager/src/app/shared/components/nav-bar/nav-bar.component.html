@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between">
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between" routerLinkActive="active" *ngIf="admin">
   <div class="header-logo" fxFlexAlign="center">
     <span>Leave Manager</span>
   </div>
@@ -19,7 +19,7 @@
           Leave Application
         </a>
       </li>
-      <li class="header-item" fxFlexAlign="center" *ngIf="userExist">
+      <li class="header-item" fxFlexAlign="center">
         <button class="account-btn"
         mat-icon-button
         [matMenuTriggerFor]="menu" matTooltip="Account">

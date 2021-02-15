@@ -35,8 +35,8 @@ export class NavBarComponent implements OnInit {
       admin => this.admin = admin
     );
     this.facadeService.isLoggedIn$().subscribe(
-      loggedIn => this.userExist = loggedIn
-    );
+    );      loggedIn => this.userExist = loggedIn
+
   }
 
   onLogout(): void {
