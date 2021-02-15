@@ -10,6 +10,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { SharedComponentsModule } from '@frontend/shared-components';
 
 
+
 @NgModule({
   declarations: [
     AccountComponent,
@@ -23,7 +24,7 @@ import { SharedComponentsModule } from '@frontend/shared-components';
     AccountRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
   ],
   exports: []
 })

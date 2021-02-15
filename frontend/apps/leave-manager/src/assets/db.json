@@ -51,6 +51,16 @@
       "confirmPassword": "222222",
       "status": "On Leave",
       "id": 6
+    },
+    {
+      "firstName": "sonam",
+      "lastName": "tamang",
+      "email": "stamang.selectsoftware@gmail.com",
+      "phone": "987765676",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "status": "At Work",
+      "id": 7
     }
   ],
   "Leaves": [
@@ -198,6 +208,35 @@
         }
       ],
       "id": 6
+    },
+    {
+      "leave": [
+        {
+          "type": "casual",
+          "numberOfDays": 30,
+          "leaveLeft": 30,
+          "leaveTaken": 0
+        },
+        {
+          "type": "sick",
+          "numberOfDays": 60,
+          "leaveLeft": 60,
+          "leaveTaken": 0
+        },
+        {
+          "type": "maternity",
+          "numberOfDays": 180,
+          "leaveLeft": 180,
+          "leaveTaken": 0
+        },
+        {
+          "type": "toil",
+          "numberOfDays": 50,
+          "leaveLeft": 50,
+          "leaveTaken": 0
+        }
+      ],
+      "id": 7
     }
   ],
   "Applied": [
@@ -243,6 +282,15 @@
       "interim": "",
       "leaveStatus": "",
       "id": 6
+    },
+    {
+      "type": "",
+      "startDate": "",
+      "endDate": "",
+      "daysApplied": 0,
+      "interim": "",
+      "leaveStatus": "",
+      "id": 7
     }
   ]
 }
