@@ -23,7 +23,8 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "apps/leave-manager/src/styles.css"
+              "apps/leave-manager/src/styles.css",
+              "node_modules/material-design-icons/iconfont/material-icons.css"
             ],
             "scripts": []
           },

@@ -6,3 +6,12 @@ table{
 th{
   align-items: center;
 }
+
+.account-section {
+
+}
+
+mat-card {
+  width: 60rem;
+  background-color: lightblue;
+}

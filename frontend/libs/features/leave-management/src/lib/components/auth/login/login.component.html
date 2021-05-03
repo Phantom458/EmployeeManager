@@ -1,4 +1,35 @@
-<div class="col-xs-12">
+<section class="login-section">
+  <div class="login-container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap=".5rem">
+    <h2>LOGIN TO YOUR ACCOUNT</h2>
+    <form class="login-form" fxLayout="column"
+    [formGroup]="userLog"
+    (ngSubmit)="onLogin()">
+      <mat-form-field appearance="outline">
+        <input type="email" placeholder="Your Email" matInput
+        id="email"
+        formControlName="email">
+        <mat-icon matPrefix>mail</mat-icon>
+        <mat-error *ngIf="!email.valid && email.touched">Please enter a valid email</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input type="password" placeholder="Your Password" matInput
+        id="password"
+        formControlName="password">
+        <mat-icon matPrefix>vpn_key</mat-icon>
+        <mat-error *ngIf="!password.valid && password.touched">Please enter a correct password</mat-error>
+      </mat-form-field>
+      <button type="submit" class="login-btn" mat-raised-button color='primary'>Login</button>
+
+      <div class="signup-link">
+        <p class="signup-text">Don't have an account?<button class="signup-btn" (click)="onRegister()">Signup</button></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+
+<!-- <div class="col-xs-12">
   <frontend-alert
     [message]="errorMessage"
     *ngIf="errorMessage"
@@ -53,4 +84,4 @@
         (click)="onRegister()">Sign up</button>
     </div>
   </form>
-</div>
+</div> -->

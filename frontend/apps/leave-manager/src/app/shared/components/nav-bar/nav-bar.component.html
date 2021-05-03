@@ -1,56 +1,35 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand">Leave Manager</a>
-    </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li routerLinkActive="active" *ngIf="userExist && !admin">
-          <a
-            role="button"
-            [routerLink]="['user', userId, 'detail']">User
-          </a>
-        </li>
-        <li routerLinkActive="active" *ngIf="admin">
-          <a
-            routerLink="user/list">Users
-          </a>
-          <!-- Leave Application for Users -->
-        </li>
-        <li routerLinkActive="active" *ngIf="userExist && !admin">
-          <a
-            role="button"
-            [routerLink]="['leave', userId, 'apply']">Leave Application
-          </a>
-        </li>
-        <!-- Leave Management for Admin -->
-        <li routerLinkActive="active" *ngIf="admin">
-          <a
-            role="button"
-            routerLink="leave/list">Manage Leave</a>
-        </li>
-      </ul>
-    </div>
-
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown" frontendDropdown *ngIf="userExist">
-        <a
-          style="cursor: pointer;"
-          class="dropdown-toggle"
-          role="button">
-          Account
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a
-            style="cursor: pointer;"
-            (click)="onLogout()">
-            Log Out
-          </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between" routerLinkActive="active" *ngIf="admin">
+  <div class="header-logo" fxFlexAlign="center">
+    <span>Leave Manager</span>
   </div>
-</nav>
+  <nav class="header-navigation" fxFlexAlign="center">
+    <ul class="header-list" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1.5rem">
+      <li class="header-item" routerLinkActive="active" *ngIf="userExist && !admin">
+        <a href="#" class="header-link" role="button" [routerLink]="['user', userId, 'detail']">
+          User
+        </a>
+      </li>
+      <li class="header-item" routerLinkActive="active" *ngIf="admin">
+        <a href="#" class="header-link" routerLink="user/list">
+          Users
+        </a>
+      </li>
+      <li class="header-item" routerLinkActive="active" *ngIf="userExist && !admin">
+        <a href="#" class="header-link" role="button" [routerLink]="['leave', userId, 'apply']">
+          Leave Application
+        </a>
+      </li>
+      <li class="header-item" fxFlexAlign="center">
+        <button class="account-btn"
+        mat-icon-button
+        [matMenuTriggerFor]="menu" matTooltip="Account">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" yPosition="below">
+          <button mat-menu-item routerLinkActive="active" *ngIf="admin">Manage Leave</button>
+          <button mat-menu-item (click) = "onLogout()">Log out</button>
+        </mat-menu></li>
+    </ul>
+  </nav>
+</mat-toolbar>
+

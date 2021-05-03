@@ -7,6 +7,13 @@ import { AppComponent } from './app.component';
 import { AppRoutesModule } from './app-routes.module';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { LeaveManagerInterceptorService } from '../../../../libs/features/leave-management/src/lib/services/leave-manager-interceptor.service';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {PortalModule} from '@angular/cdk/portal';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -14,6 +21,7 @@ import { LeaveManagerInterceptorService } from '../../../../libs/features/leave-
     NavBarComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutesModule,
     HttpClientModule,
@@ -25,8 +33,17 @@ import { LeaveManagerInterceptorService } from '../../../../libs/features/leave-
         allowedDomains: ['localhost:5000'],
         disallowedRoutes: ['http://localhost:5000/auth/login']
       }
-    })
+    }),
+    MatToolbarModule,
+    FlexLayoutModule,
+    MatIconModule,
+    MatMenuModule,
+    PortalModule,
+    MatTooltipModule
   ],
+
+  exports: [NavBarComponent],
+
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -34,8 +51,6 @@ import { LeaveManagerInterceptorService } from '../../../../libs/features/leave-
       multi: true
     }
   ],
-  bootstrap: [AppComponent],
-  exports: [
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

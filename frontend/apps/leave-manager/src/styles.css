@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/deeppurple-amber";
+
+/******************************
+BASIC SETUP
+******************************/
+/******************
+white-grey: #F6F6FB;
+*/
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-size: cover;
+  font-weight: 400;
+  color: #333;
+  line-height: 1.5rem;
+}
